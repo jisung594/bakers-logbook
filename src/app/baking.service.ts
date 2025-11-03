@@ -1,4 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+import { Ingredient, DENSITY_DATA, IngredientInput, IngredientUnit } from './models/baking.model'; 
+
+const initialRecipeState: IngredientInput[] = DENSITY_DATA.map(i => ({
+    key: i.key,
+    volume: null,
+    unit: i.units[0].unit // defaults to the first unit defined for this ingredient (ie, 'cup' for flour)
+}));
 
 @Injectable({
   // *** this tells Angular to create a single instance of this service
@@ -7,8 +14,15 @@ import { Injectable } from '@angular/core';
 })
 export class BakingService {
 
+  // holds full ingredient definitions (read-only)
+  allIngredients = signal<Ingredient[]>(DENSITY_DATA);
+
+  // dynamic state that tracks user's input
+  recipeInputs = signal<IngredientInput[]>(initialRecipeState);
+
   constructor() {
     console.log('***** BakingService initialized *****');
+    console.log('***** Recipe inputs state initialized *****');
   }
 
 
