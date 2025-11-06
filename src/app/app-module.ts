@@ -9,12 +9,12 @@ import { RecipeForm } from './recipe-form/recipe-form';
 @NgModule({
   declarations: [
     App,
-    Header,
-    RecipeForm
+    Header
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RecipeForm
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
