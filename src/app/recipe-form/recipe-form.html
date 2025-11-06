@@ -1,1 +1,26 @@
-<p>placeholder for recipe-form component</p>
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+    <input 
+        type="text" 
+        id="name" 
+        formControlName="name"
+        placeholder="Recipe Name"
+    />
+
+    <div formArrayName="ingredients">
+        <label>Ingredients</label>
+        <div *ngFor="let ingredient of ingredients.controls; let i = index">
+        <input
+            type="text"
+            [formControlName]="i"
+            [id]="'ingredient-' + i"
+            placeholder="e.g. flour"
+        />
+        <button type="button" (click)="removeIngredient(i)" *ngIf="ingredients.length > 1">
+            Remove
+        </button>
+        </div>
+        <button type="button" (click)="addIngredient()">+ Add Ingredient</button>
+    </div>
+
+    <button type="submit" [disabled]="!recipeForm.valid">Submit</button>
+</form>
