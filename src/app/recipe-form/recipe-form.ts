@@ -36,8 +36,12 @@ export class RecipeForm {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
-  createIngredient(): FormControl {
-    return this.fb.control('', Validators.required);
+  createIngredient(): FormGroup {
+    return this.fb.group({
+      quantity: [''],
+      unit: [''],
+      name: ['', Validators.required],
+    });
   }
 
   addIngredient() {
