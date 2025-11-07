@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Ingredient, DENSITY_DATA, IngredientInput, IngredientUnit } from '../models/baking.model'; 
+import { Ingredient, DENSITY_DATA, IngredientInput, IngredientUnit } from '../models/ingredient.model'; 
 
 const initialRecipeState: IngredientInput[] = DENSITY_DATA.map(i => ({
     key: i.key,
