@@ -7,28 +7,28 @@ import {
   Validators
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RecipeFirestoreService } from '../services/recipe-firestore.service';
+import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
 
 @Component({
-  selector: 'app-recipe-form',
+  selector: 'app-ingredients-form',
   standalone: true,
-  templateUrl: './recipe-form.html',
-  styleUrl: './recipe-form.css',
+  templateUrl: './ingredients-form.html',
+  styleUrl: './ingredients-form.css',
   imports: [CommonModule, ReactiveFormsModule]
 })
-export class RecipeForm {
+export class IngredientsForm {
   // NOTE: using FormBuilder w/ constructor is best-practice (?)
-  // recipeForm = new FormGroup({
+  // ingredientsForm = new FormGroup({
   //   name: new FormControl('', Validators.required),
   // });
 
-  recipeForm: FormGroup;
+  ingredientsForm: FormGroup;
 
   constructor(
     private fb: FormBuilder, 
     private recipeRepo: RecipeFirestoreService
   ) {
-    this.recipeForm = this.fb.group({
+    this.ingredientsForm = this.fb.group({
       name: ['', Validators.required],
       ingredients: this.fb.array([this.createIngredient()]),
     });
@@ -36,7 +36,7 @@ export class RecipeForm {
 
   // Returns typed reference to the FormArray
   get ingredients(): FormArray {
-    return this.recipeForm.get('ingredients') as FormArray;
+    return this.ingredientsForm.get('ingredients') as FormArray;
   }
 
   createIngredient(): FormGroup {
@@ -56,11 +56,11 @@ export class RecipeForm {
   }
 
   async onSubmit() {
-    if (this.recipeForm.valid) {
+    if (this.ingredientsForm.valid) {
       try {
-        await this.recipeRepo.addRecipe(this.recipeForm.value).then(() => {
-          console.log('Recipe saved to Firestore.', this.recipeForm.value);
-          this.recipeForm.reset();
+        await this.recipeRepo.addRecipe(this.ingredientsForm.value).then(() => {
+          console.log('Recipe saved to Firestore.', this.ingredientsForm.value);
+          this.ingredientsForm.reset();
           this.ingredients.clear();
           this.addIngredient(); // Adds one blank field (default form)
         }); 
