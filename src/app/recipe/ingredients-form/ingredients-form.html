@@ -1,4 +1,4 @@
-<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="ingredientsForm" (ngSubmit)="onSubmit()">
     <input 
         type="text" 
         id="recipe-name" 
@@ -40,5 +40,5 @@
     </div>
 
     <button type="button" (click)="addIngredient()">Add Ingredient</button>
-    <button type="submit" [disabled]="!recipeForm.valid">Submit</button>
+    <button type="submit" [disabled]="!ingredientsForm.valid">Submit</button>
 </form>
