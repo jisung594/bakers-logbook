@@ -1,10 +1,15 @@
 <form [formGroup]="ingredientsForm" (ngSubmit)="onSubmit()">
+    
+    
+    
+    <!-- TODO: Move out to its own form -->
     <input 
         type="text" 
         id="recipe-name" 
         formControlName="name"
         placeholder="Recipe Name"
     />
+
 
     <div formArrayName="ingredients">
         <div
