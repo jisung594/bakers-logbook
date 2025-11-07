@@ -1,0 +1,27 @@
+<form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()">
+
+    <div formArrayName="instructions">
+        <div
+            *ngFor="let instruction of instructions.controls; let i = index"
+            [formGroupName]="i"
+            class="instruction-row"
+        >
+            <input
+                type="text"
+                formControlName="quantity"
+                placeholder="Quantity (e.g. 1 1/2)"
+                class="instruction-input"
+            />
+
+            <input
+                type="text"
+                formControlName="name"
+                placeholder="Instruction name"
+                class="instruction-input"
+            />
+
+            <button type="button" (click)="removeInstruction(i)">×</button>
+        </div>
+    </div>
+
+</form>
