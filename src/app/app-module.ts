@@ -13,16 +13,18 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     App,
-    Header
+    // Header
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    Header,
     RecipeForm,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideFirestore(() => getFirestore())
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
+
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
