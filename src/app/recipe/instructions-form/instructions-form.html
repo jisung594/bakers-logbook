@@ -7,11 +7,11 @@
         >
             <textarea
                 formControlName="step"
-                placeholder="Step {{ i + 1 }}"
+                placeholder="Step {{ i + 1 }}:"
                 class="instruction-input"
             ></textarea>
             <button type="button" (click)="removeInstruction(i)">×</button>
         </div>
     </div>
-    <button type="button" (click)="addInstruction()">×</button>
+    <button type="button" (click)="addInstruction()">Add Step +</button>
 </form>
