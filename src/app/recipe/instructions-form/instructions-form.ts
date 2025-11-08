@@ -21,7 +21,7 @@ export class InstructionsForm {
 
   constructor(
     private fb: FormBuilder,
-    private receipeRepo: RecipeFirestoreService
+    private recipeRepo: RecipeFirestoreService
   ) {
     this.instructionsForm = this.fb.group({
       instructions: this.fb.array([this.createInstruction()])
@@ -35,6 +35,7 @@ export class InstructionsForm {
   createInstruction(): FormGroup {
     return this.fb.group({
       step: ['', Validators.required],
+      isEditing: [true] // tracks edit/display mode
     });
   }
 
@@ -46,7 +47,18 @@ export class InstructionsForm {
     this.instructions.removeAt(index);
   }
 
-  onSubmit() {
-    console.log('Instructions submitted:', this.instructionsForm.value);
+  async onSubmit() {
+    if (this.instructionsForm.valid) {
+      try {
+        await this.recipeRepo.addRecipe(this.instructionsForm.value).then(() => {
+          console.log('Recipe saved to Firestore.', this.instructionsForm.value);
+          this.instructionsForm.reset();
+          this.instructions.clear();
+          this.addInstruction(); // Adds one blank field (default form)
+        }); 
+      } catch (err) {
+        console.error('Error saving recipe:', err);
+      }
+    }
   }
 }
