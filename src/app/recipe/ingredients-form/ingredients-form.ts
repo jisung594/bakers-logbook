@@ -44,6 +44,7 @@ export class IngredientsForm {
       quantity: [''],
       unit: [''],
       name: ['', Validators.required],
+      isEditing: [true] // tracks edit/display mode
     });
   }
 
