@@ -5,12 +5,23 @@
             [formGroupName]="i"
             class="instruction-row"
         >
-            <textarea
-                formControlName="step"
-                placeholder="Step {{ i + 1 }}:"
-                class="instruction-input"
-            ></textarea>
-            <button type="button" (click)="removeInstruction(i)">×</button>
+            <div *ngIf="instruction.value.isEditing; else viewMode">
+                <textarea
+                    formControlName="step"
+                    placeholder="Step {{ i + 1 }}:"
+                    class="instruction-input"
+                ></textarea>
+                <button type="button" (click)="saveInstruction()">Save</button>
+                <button type="button" (click)="removeInstruction(i)">×</button>
+            </div>
+
+            <ng-template #viewMode>
+                <p>
+                    {{ instruction.value.step }} 
+                </p>
+                <button type="button" (click)="editInstruction(i)">edit</button>
+                <button type="button" (click)="removeInstruction(i)">remove</button>
+            </ng-template>
         </div>
     </div>
     <button type="button" (click)="addInstruction()">Add Step +</button>
