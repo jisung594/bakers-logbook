@@ -55,7 +55,7 @@ export class InstructionsForm {
   async saveInstruction(index: number) {
     if (this.instructionsForm.valid) {
       try {
-        this.recipeRepo.addStep(this.instructionsForm.value).then(() => {
+        this.recipeRepo.saveStep(this.instructionsForm.value).then(() => {
         // await this.recipeRepo.addStep(this.instructionsForm.value).then(() => {
           console.log('Step saved to Firestore.', this.instructionsForm.value);
 
