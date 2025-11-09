@@ -18,4 +18,14 @@ export class RecipeFirestoreService {
     const recipesRef = collection(this.firestore, 'recipes');
     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
   }
+
+
+
+  addStep(recipe: Recipe) {
+    const recipesRef = collection(this.firestore, 'recipes');
+    return addDoc(recipesRef, recipe);
+  }
+
+
+
 }
