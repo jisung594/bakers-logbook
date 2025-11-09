@@ -1,4 +1,5 @@
-<form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="instructionsForm">
+<!-- <form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()"></form> -->
     <div formArrayName="instructions">
         <div
             *ngFor="let instruction of instructions.controls; let i = index"
@@ -11,7 +12,7 @@
                     placeholder="Step {{ i + 1 }}:"
                     class="instruction-input"
                 ></textarea>
-                <button type="button" (click)="saveInstruction()">Save</button>
+                <button type="button" (click)="saveInstruction(i)">Save</button>
                 <button type="button" (click)="removeInstruction(i)">×</button>
             </div>
 
