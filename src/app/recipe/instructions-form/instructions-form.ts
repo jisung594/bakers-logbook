@@ -47,11 +47,21 @@ export class InstructionsForm {
     this.instructions.removeAt(index);
   }
 
-  async onSubmit() {
+  editInstruction(index: number) {
+    const item = this.instructions.at(index);
+    item.patchValue({ isEditing: true });
+  }
+
+  async saveInstruction(index: number) {
+  // async onSubmit() {
     if (this.instructionsForm.valid) {
       try {
-        await this.recipeRepo.addRecipe(this.instructionsForm.value).then(() => {
-          console.log('Recipe saved to Firestore.', this.instructionsForm.value);
+
+        // TODO: Update when inline-editing is ready
+
+        this.recipeRepo.addStep(this.instructionsForm.value).then(() => {
+        // await this.recipeRepo.addStep(this.instructionsForm.value).then(() => {
+          console.log('Step saved to Firestore.', this.instructionsForm.value);
           this.instructionsForm.reset();
           this.instructions.clear();
           this.addInstruction(); // Adds one blank field (default form)
