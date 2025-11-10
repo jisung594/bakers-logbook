@@ -7,7 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
+import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
 
 @Component({
   selector: 'app-ingredients-form',
