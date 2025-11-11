@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { 
   FormArray, 
   FormBuilder,
@@ -17,10 +17,7 @@ import { RecipeFirestoreService } from '../../../services/recipe-firestore.servi
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class IngredientsForm {
-  // NOTE: using FormBuilder w/ constructor is best-practice (?)
-  // ingredientsForm = new FormGroup({
-  //   name: new FormControl('', Validators.required),
-  // });
+  @Output() ingredientsChange = new EventEmitter<any[]>();
 
   ingredientsForm: FormGroup;
 
@@ -56,18 +53,22 @@ export class IngredientsForm {
     this.ingredients.removeAt(index);
   }
 
-  async onSubmit() {
-    if (this.ingredientsForm.valid) {
-      try {
-        await this.recipeRepo.addRecipe(this.ingredientsForm.value).then(() => {
-          console.log('Recipe saved to Firestore.', this.ingredientsForm.value);
-          this.ingredientsForm.reset();
-          this.ingredients.clear();
-          this.addIngredient(); // Adds one blank field (default form)
-        }); 
-      } catch (err) {
-        console.error('Error saving recipe:', err);
-      }
-    }
+  emitChange() {
+    this.ingredientsChange.emit(this.ingredientsForm.value.ingredients);
   }
+
+  // async onSubmit() {
+  //   if (this.ingredientsForm.valid) {
+  //     try {
+  //       await this.recipeRepo.addRecipe(this.ingredientsForm.value).then(() => {
+  //         console.log('Recipe saved to Firestore.', this.ingredientsForm.value);
+  //         this.ingredientsForm.reset();
+  //         this.ingredients.clear();
+  //         this.addIngredient(); // Adds one blank field (default form)
+  //       }); 
+  //     } catch (err) {
+  //       console.error('Error saving recipe:', err);
+  //     }
+  //   }
+  // }
 }
