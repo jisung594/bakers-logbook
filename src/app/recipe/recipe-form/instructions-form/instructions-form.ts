@@ -57,6 +57,14 @@ export class InstructionsForm {
     item.patchValue({ isEditing: true });
   }
 
+  saveInstruction(index: number) {
+    const instruction = this.instructions.at(index);
+    instruction.patchValue({ isEditing: false });
+
+    // Notifies parent
+    this.emitChange();
+  }
+
   // Emits change to instructions for RecipeForm (parent) to handle
   emitChange() {
     this.instructionsChange.emit(this.instructionsForm.value.instructions);
