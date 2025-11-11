@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { 
   FormArray, 
   FormBuilder, 
@@ -12,11 +12,16 @@ import { RecipeFirestoreService } from '../../../services/recipe-firestore.servi
 @Component({
   selector: 'app-instructions-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule
+  ],
   templateUrl: './instructions-form.html',
   styleUrl: './instructions-form.css'
 })
 export class InstructionsForm {
+  @Output() instructionsChange = new EventEmitter<any[]>();
+
   instructionsForm: FormGroup;
 
   constructor(
@@ -52,19 +57,24 @@ export class InstructionsForm {
     item.patchValue({ isEditing: true });
   }
 
-  async saveInstruction(index: number) {
-    if (this.instructionsForm.valid) {
-      try {
-        this.recipeRepo.saveStep(this.instructionsForm.value).then(() => {
-        // await this.recipeRepo.addStep(this.instructionsForm.value).then(() => {
-          console.log('Step saved to Firestore.', this.instructionsForm.value);
-
-          const item = this.instructions.at(index);
-          item.patchValue({ isEditing: false });
-        }); 
-      } catch (err) {
-        console.error('Error saving recipe:', err);
-      }
-    }
+  // Emits change to instructions for RecipeForm (parent) to handle
+  emitChange() {
+    this.instructionsChange.emit(this.instructionsForm.value.instructions);
   }
+
+  // async saveInstruction(index: number) {
+  //   if (this.instructionsForm.valid) {
+  //     try {
+  //       this.recipeRepo.saveStep(this.instructionsForm.value).then(() => {
+  //       // await this.recipeRepo.addStep(this.instructionsForm.value).then(() => {
+  //         console.log('Step saved to Firestore.', this.instructionsForm.value);
+
+  //         const item = this.instructions.at(index);
+  //         item.patchValue({ isEditing: false });
+  //       }); 
+  //     } catch (err) {
+  //       console.error('Error saving recipe:', err);
+  //     }
+  //   }
+  // }
 }
