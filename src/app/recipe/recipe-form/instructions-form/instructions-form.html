@@ -17,9 +17,7 @@
             </div>
 
             <ng-template #viewMode>
-                <p>
-                    {{ instruction.value.step }} 
-                </p>
+                <p>{{ instruction.value.step }}</p>
                 <button type="button" (click)="editInstruction(i)">edit</button>
                 <button type="button" (click)="removeInstruction(i)">remove</button>
             </ng-template>
