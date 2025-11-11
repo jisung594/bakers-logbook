@@ -12,11 +12,14 @@
                     placeholder="Step {{ i + 1 }}:"
                     class="instruction-input"
                 ></textarea>
-                <button type="button" (click)="saveInstruction(i)">Save</button>
-                <button type="button" (click)="removeInstruction(i)">×</button>
+
+                <div class="editing-options-editmode">
+                    <button type="button" (click)="saveInstruction(i)">Save</button>
+                    <button type="button" (click)="removeInstruction(i)">×</button>
+                </div>
             </div>
 
-            <ng-template #viewMode>
+            <ng-template #viewMode class="editing-options-viewmode">
                 <p>{{ instruction.value.step }}</p>
                 <button type="button" (click)="editInstruction(i)">edit</button>
                 <button type="button" (click)="removeInstruction(i)">remove</button>
