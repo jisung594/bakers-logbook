@@ -53,6 +53,19 @@ export class IngredientsForm {
     this.ingredients.removeAt(index);
   }
 
+  editIngredient(index: number) {
+    const item = this.ingredients.at(index);
+    item.patchValue({ isEditing: true });
+  }
+
+  saveIngredient(index: number) {
+    const ingredient = this.ingredients.at(index);
+    ingredient.patchValue({ isEditing: false });
+
+    // Notifies parent
+    this.emitChange();
+  }
+
   emitChange() {
     this.ingredientsChange.emit(this.ingredientsForm.value.ingredients);
   }
