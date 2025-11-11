@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Header } from './header/header';
 import { IngredientsForm } from './recipe/recipe-form/ingredients-form/ingredients-form';
 import { InstructionsForm } from './recipe/recipe-form/instructions-form/instructions-form';
+import { RecipeForm } from './recipe/recipe-form/recipe-form';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { InstructionsForm } from './recipe/recipe-form/instructions-form/instruc
     CommonModule, 
     Header, 
     IngredientsForm, 
-    InstructionsForm
+    InstructionsForm,
+    RecipeForm,
   ],
 })
 export class App {
