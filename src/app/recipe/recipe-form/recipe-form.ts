@@ -43,21 +43,19 @@ export class RecipeForm {
   }
 
   async saveRecipe() {
-    // Exits if recipe name field is empty
-    if (!this.recipeName.value.trim()) return;
+    if (this.recipeName && (this.ingredients.length || this.instructions.length)) {
+      const newRecipe = {
+        name: this.recipeName.value,
+        ingredients: this.ingredients,
+        instructions: this.instructions,
+      }
 
-    const newRecipe = {
-      name: this.recipeName.value,
-      ingredients: this.ingredients,
-      instructions: this.instructions,
+      try {
+        await this.recipeRepo.addRecipe(newRecipe);
+        console.log('Recipe saved successfully:', newRecipe);
+      } catch (err) {
+        console.error('Error saving recipe:', err);
+      }
     }
-
-    try {
-      await this.recipeRepo.addRecipe(newRecipe);
-      console.log('Recipe saved successfully:', newRecipe);
-    } catch (err) {
-      console.error('Error saving recipe:', err);
-    }
-
   }
 }
