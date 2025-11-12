@@ -1,27 +1,31 @@
-
-<div *ngIf="recipeName.value.isEditing; else viewMode">
-    <input 
-        type="text" 
-        id="recipe-name" 
-        formControlName="name"
-        placeholder="Recipe Name"
-    />
-    <div class="editing-options-editmode">
-        <button type="button" (click)="saveRecipeName(i)">Save</button>
+<div class="recipe-form">
+    <div *ngIf="recipeName.isEditing; else viewMode">
+        <input 
+            type="text" 
+            id="recipe-name"
+            [(ngModel)]="recipeName.value"
+            placeholder="Recipe Name"
+        />
+        <div class="editing-options-editmode">
+            <button type="button" (click)="saveRecipeName()">Save</button>
+        </div>
     </div>
+
+    <ng-template #viewMode>
+        <div class="editing-options-viewmode">
+            <h2>{{ recipeName.value || 'Untitled Recipe' }}</h2>
+            <button type="button" (click)="editRecipeName()">edit</button>
+        </div>
+    </ng-template>
+
+    <h3>INGREDIENTS</h3>
+    <app-ingredients-form (ingredientsChange)="onIngredientsChange($event)">
+    </app-ingredients-form>
+
+    <h3>INSTRUCTIONS</h3>
+    <app-instructions-form (instructionsChange)="onInstructionsChange($event)">
+    </app-instructions-form>
+
+    <!-- TODO: submit button for saving data to Firestore here -->
+    <button type="button" (click)="saveRecipe()">Save Recipe</button>
 </div>
-
-<ng-template #viewMode class="editing-options-viewmode">
-    <p>{{ recipeName.value }}</p>
-    <button type="button" (click)="editRecipeName(i)">edit</button>
-    <button type="button" (click)="removeRecipeName(i)">remove</button>
-</ng-template>
-
-<h3>INGREDIENTS</h3>
-<app-ingredients-form></app-ingredients-form>
-
-<h3>INSTRUCTIONS</h3>
-<app-instructions-form></app-instructions-form>
-
-<!-- TODO: submit button for saving data to Firestore here -->
-<button type="button" (click)="saveRecipe()">Save Recipe</button>
