@@ -34,11 +34,6 @@ export class RecipeForm {
     this.recipeName.isEditing = false;
   }
 
-
-
-
-  // =============================================
-  // (will) listen for changes in both child forms
   onIngredientsChange(ingredients: any[]) {
     this.ingredients = ingredients;
   }
@@ -46,7 +41,6 @@ export class RecipeForm {
   onInstructionsChange(instructions: any[]) {
     this.instructions = instructions;
   }
-  // =============================================
 
   async saveRecipe() {
     // Exits if recipe name field is empty
