@@ -32,7 +32,7 @@
                     <button type="button" (click)="removeIngredient(i)">×</button>
                 </div>
             </div>
-            <div *ngIf="ingredient.value.isEditing">
+            <div *ngIf="!ingredient.value.isEditing">
                 <div class="editing-options-viewmode">
                 <p>
                     {{ ingredient.value.quantity }} 
