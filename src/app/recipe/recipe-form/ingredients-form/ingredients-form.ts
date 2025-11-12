@@ -26,7 +26,6 @@ export class IngredientsForm {
     private recipeRepo: RecipeFirestoreService
   ) {
     this.ingredientsForm = this.fb.group({
-      name: ['', Validators.required],
       ingredients: this.fb.array([this.createIngredient()]),
     });
   }
