@@ -25,22 +25,4 @@ export class RecipeFirestoreService {
     const recipesRef = collection(this.firestore, 'recipes');
     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
   }
-
-
-
-  saveStep(recipe: Recipe) {
-    const recipesRef = collection(this.firestore, 'recipes');
-
-
-    console.log(this.getRecipes());
-
-    // return updateDoc(docRef, instruction);
-
-
-    // TODO: Add if/else here for creating new doc or updating existing one
-    return addDoc(recipesRef, recipe);
-  }
-
-
-
 }
