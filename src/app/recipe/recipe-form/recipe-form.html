@@ -1,8 +1,27 @@
-<p>recipe-form works!</p>
 
+<div *ngIf="recipeName.value.isEditing; else viewMode">
+    <input 
+        type="text" 
+        id="recipe-name" 
+        formControlName="name"
+        placeholder="Recipe Name"
+    />
+    <div class="editing-options-editmode">
+        <button type="button" (click)="saveRecipeName(i)">Save</button>
+    </div>
+</div>
 
-<!-- Move recipe name input field here -->
+<ng-template #viewMode class="editing-options-viewmode">
+    <p>{{ recipeName.value }}</p>
+    <button type="button" (click)="editRecipeName(i)">edit</button>
+    <button type="button" (click)="removeRecipeName(i)">remove</button>
+</ng-template>
 
+<h3>INGREDIENTS</h3>
 <app-ingredients-form></app-ingredients-form>
+
+<h3>INSTRUCTIONS</h3>
 <app-instructions-form></app-instructions-form>
 
+<!-- TODO: submit button for saving data to Firestore here -->
+<button type="button" (click)="saveRecipe()">Save Recipe</button>

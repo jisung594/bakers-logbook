@@ -34,7 +34,7 @@ export class RecipeForm {
   }
   // =============================================
 
-  async saveRecipe(index: number) {
+  async saveRecipe() {
 
     // Exits if recipe name field is empty
     if (!this.recipeName.trim()) return;
@@ -45,7 +45,9 @@ export class RecipeForm {
       instructions: this.instructions
     }
 
-    
+    console.log("Not saved in firestore yet");
+
+    // TODO: Save to Firestore here
 
   }
 }
