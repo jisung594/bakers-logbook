@@ -49,19 +49,21 @@ export class RecipeForm {
   // =============================================
 
   async saveRecipe() {
-
     // Exits if recipe name field is empty
-    if (!this.recipeName.trim()) return;
+    if (!this.recipeName.value.trim()) return;
 
     const newRecipe = {
-      name: this.recipeName,
+      name: this.recipeName.value,
       ingredients: this.ingredients,
-      instructions: this.instructions
+      instructions: this.instructions,
     }
 
-    console.log("Not saved in firestore yet");
-
-    // TODO: Save to Firestore here
+    try {
+      await this.recipeRepo.addRecipe(newRecipe);
+      console.log('Recipe saved successfully:', newRecipe);
+    } catch (err) {
+      console.error('Error saving recipe:', err);
+    }
 
   }
 }
