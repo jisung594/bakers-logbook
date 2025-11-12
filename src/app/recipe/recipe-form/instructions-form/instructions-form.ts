@@ -69,20 +69,4 @@ export class InstructionsForm {
   emitChange() {
     this.instructionsChange.emit(this.instructionsForm.value.instructions);
   }
-
-  // async saveInstruction(index: number) {
-  //   if (this.instructionsForm.valid) {
-  //     try {
-  //       this.recipeRepo.saveStep(this.instructionsForm.value).then(() => {
-  //       // await this.recipeRepo.addStep(this.instructionsForm.value).then(() => {
-  //         console.log('Step saved to Firestore.', this.instructionsForm.value);
-
-  //         const item = this.instructions.at(index);
-  //         item.patchValue({ isEditing: false });
-  //       }); 
-  //     } catch (err) {
-  //       console.error('Error saving recipe:', err);
-  //     }
-  //   }
-  // }
 }
