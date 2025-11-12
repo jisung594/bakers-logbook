@@ -6,7 +6,7 @@
             [formGroupName]="i"
             class="instruction-row"
         >
-            <div *ngIf="instruction.value.isEditing; else viewMode">
+            <div *ngIf="instruction.value.isEditing">
                 <textarea
                     formControlName="step"
                     placeholder="Step {{ i + 1 }}:"
@@ -19,11 +19,14 @@
                 </div>
             </div>
 
-            <ng-template #viewMode class="editing-options-viewmode">
+            <div *ngIf="!instruction.value.isEditing">
                 <p>{{ instruction.value.step }}</p>
-                <button type="button" (click)="editInstruction(i)">edit</button>
-                <button type="button" (click)="removeInstruction(i)">remove</button>
-            </ng-template>
+
+                <div class="editing-options-viewmode">
+                    <button type="button" (click)="editInstruction(i)">edit</button>
+                    <button type="button" (click)="removeInstruction(i)">remove</button>
+                </div>
+            </div>
         </div>
     </div>
     <button type="button" (click)="addInstruction()">Add Step +</button>

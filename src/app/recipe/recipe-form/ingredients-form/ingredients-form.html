@@ -6,7 +6,7 @@
             [formGroupName]="i"
             class="ingredient-row"
         >
-            <div *ngIf="ingredient.value.isEditing; else viewMode">
+            <div *ngIf="ingredient.value.isEditing">
                 <input
                     type="text"
                     formControlName="quantity"
@@ -27,16 +27,13 @@
                     placeholder="Ingredient name"
                     class="ingredient-input"
                 />
-
-
                 <div class="editing-options-editmode">
                     <button type="button" (click)="saveIngredient(i)">Save</button>
                     <button type="button" (click)="removeIngredient(i)">×</button>
                 </div>
-
             </div>
-
-            <ng-template #viewMode class="editing-options-viewmode">
+            <div *ngIf="ingredient.value.isEditing">
+                <div class="editing-options-viewmode">
                 <p>
                     {{ ingredient.value.quantity }} 
                     {{ ingredient.value.unit }}
@@ -44,12 +41,10 @@
                 </p>
                 <button type="button" (click)="editIngredient(i)">edit</button>
                 <button type="button" (click)="removeIngredient(i)">remove</button>
-            </ng-template>
-
-
+                </div>
+            </div>
             <button type="button" (click)="removeIngredient(i)">×</button>
         </div>
     </div>
-
     <button type="button" (click)="addIngredient()">Add Ingredient</button>
 </form>
