@@ -17,11 +17,25 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './recipe-form.css'
 })
 export class RecipeForm {
-  recipeName = '';
+  recipeName = {
+    value: '',
+    isEditing: true,
+  };
   ingredients: any[] = [];
   instructions: any[] = [];
 
   constructor(private recipeRepo: RecipeFirestoreService) {}
+
+  editRecipeName() {
+    this.recipeName.isEditing = true;
+  }
+
+  saveRecipeName() {
+    this.recipeName.isEditing = false;
+  }
+
+
+
 
   // =============================================
   // (will) listen for changes in both child forms
