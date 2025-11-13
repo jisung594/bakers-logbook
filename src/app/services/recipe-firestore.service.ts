@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { 
-    Firestore, 
-    collection, 
     addDoc, 
-    doc, 
-    setDoc, 
-    collectionData 
+    collection,
+    collectionData,
+    // doc, 
+    Firestore,
+    // setDoc,
+    serverTimestamp 
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Recipe } from '../models/recipe.model';
@@ -18,7 +19,11 @@ export class RecipeFirestoreService {
 
   addRecipe(recipe: Recipe) {
     const recipesRef = collection(this.firestore, 'recipes');
-    return addDoc(recipesRef, recipe);
+    return addDoc(recipesRef, {
+        recipe,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+    });
   }
 
   getRecipes(): Observable<Recipe[]> {
