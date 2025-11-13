@@ -29,7 +29,7 @@ export class InstructionsForm {
     private recipeRepo: RecipeFirestoreService
   ) {
     this.instructionsForm = this.fb.group({
-      instructions: this.fb.array([this.createInstruction()])
+      instructions: this.fb.array([this.createInstruction(1)]) // starts first step in order at 1
     })
   }
 
@@ -37,15 +37,19 @@ export class InstructionsForm {
     return this.instructionsForm.get('instructions') as FormArray;
   }
 
-  createInstruction(): FormGroup {
+  createInstruction(order: number): FormGroup {
     return this.fb.group({
       step: ['', Validators.required],
+      order: [order],
       isEditing: [true] // tracks edit/display mode
     });
   }
 
-  addInstruction() {
-    this.instructions.push(this.createInstruction());
+  addInstruction(): void {
+    const instructionsArray = this.instructions;
+    const nextOrder = instructionsArray.length + 1;
+
+    this.instructions.push(this.createInstruction(nextOrder));
   }
 
   removeInstruction(index: number) {
