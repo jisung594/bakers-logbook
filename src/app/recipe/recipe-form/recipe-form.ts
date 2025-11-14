@@ -61,7 +61,6 @@ export class RecipeForm {
           return;
         } 
         
-
         // Checks if recipe already exists by name
         const existingRecipeDoc = await this.recipeRepo.getRecipeByName(recipeData.name);
 
@@ -79,9 +78,6 @@ export class RecipeForm {
           this.currentRecipeId = newDocRef.id;
           console.log('Recipe created successfully.');
         }
-
-        
-
       } catch (err) {
         console.error('Error saving recipe:', err);
       }
