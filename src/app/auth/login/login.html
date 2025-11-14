@@ -1,1 +1,6 @@
-<button (click)="handleGoogleSignIn()">Sign in with Google</button>
+<!-- Displays button if user is not logged in. -->
+<button *ngIf="!user" (click)="handleGoogleSignIn()">Sign in with Google</button>
+
+<div *ngIf="user" class="logged-in">
+    <span>Hello, {{ user.displayName }}!</span>
+</div>
