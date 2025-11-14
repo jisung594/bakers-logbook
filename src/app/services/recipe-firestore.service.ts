@@ -14,6 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Recipe } from '../models/recipe.model';
+import { recipeConverter } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,8 +42,9 @@ export class RecipeFirestoreService {
     return updateDoc(recipeDoc, { ...data, updatedAt: new Date() });
   }
   
+  // Returns promise of a snapshot (matching recipe doc)
   async getRecipeByName(name: string): Promise<QuerySnapshot<Recipe>> {
-    const recipesRef = collection(this.firestore, 'recipes');
+    const recipesRef = collection(this.firestore, 'recipes').withConverter(recipeConverter);
     const q = query(recipesRef, where('name', '==', name));
     return getDocs(q);
   }
