@@ -1,3 +1,5 @@
+import { FirestoreDataConverter, DocumentData } from '@angular/fire/firestore';
+
 export interface Ingredient {
   name: string;
   quantity: string;
@@ -20,3 +22,21 @@ export interface Recipe {
   createdAt?: any;
   updatedAt?: any;
 }
+
+// Firestore converter
+export const recipeConverter: FirestoreDataConverter<Recipe> = {
+  toFirestore(recipe: Recipe): DocumentData {
+    return { ...recipe };
+  },
+  fromFirestore(snapshot, options): Recipe {
+    const data = snapshot.data(options);
+    return {
+      id: snapshot.id,
+      name: data['name'],
+      ingredients: data['ingredients'],
+      instructions: data['instructions'],
+      createdAt: data['createdAt'],
+      updatedAt: data['updatedAt'],
+    };
+  }
+};
