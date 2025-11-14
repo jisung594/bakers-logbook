@@ -26,7 +26,7 @@ export class RecipeFirestoreService {
     const recipesRef = collection(this.firestore, 'recipes');
     
     return addDoc(recipesRef, {
-      recipe,
+      ...recipe,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     });
