@@ -1,4 +1,10 @@
-import { authState, Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { 
+  authState, 
+  Auth, 
+  GoogleAuthProvider, 
+  signInWithPopup,
+  signOut
+} from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'firebase/auth';
@@ -24,5 +30,9 @@ export class AuthService {
       console.error("Google sign-in failed:", error);
       throw error; 
     }
+  }
+
+  signOut() {
+    return signOut(this.auth);
   }
 }
