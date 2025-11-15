@@ -1,18 +1,24 @@
+import { authState, Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
+import { User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private auth: Auth) {}
+  authState$: Observable<User | null>;
+
+  constructor(private auth: Auth) {
+    // Initializes observable to make available immediately
+    this.authState$ = authState(this.auth); // built-in Firebase Observable (manages + reacts to changes in authentication state)
+  }
 
   async signInWithGoogle() {
     const provider = new GoogleAuthProvider();
 
     try {
-      // built-in Firebase function for handling signin via Google's popup window
-      const result = await signInWithPopup(this.auth, provider);
+      const result = await signInWithPopup(this.auth, provider); // built-in Firebase function for handling signin via Google's popup window
       return result;
     } catch (error) {
       console.error("Google sign-in failed:", error);
