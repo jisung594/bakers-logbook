@@ -49,50 +49,56 @@ export class RecipeForm {
 
   async saveRecipe() {
     // Requires at least a valid recipe name upon submit
-    if (this.recipeName) {
-      const recipeData = {
-        name: this.recipeName.value,
-        ingredients: this.ingredients,
-        instructions: this.instructions,
-        updatedAt: new Date(),
+    if (!this.recipeName?.value) {
+      console.warn("Recipe name is required before saving.");
+      return;
+    }
+
+    const recipeData = {
+      name: this.recipeName.value,
+      ingredients: this.ingredients,
+      instructions: this.instructions,
+      updatedAt: new Date(),
+    }
+
+
+    // ====================================
+    const user = await this.authService.getCurrentUser();
+    
+    if (!user) {
+      console.warn("You must be signed in to save recipes.");
+      return;
+    }
+    // ====================================
+
+
+    try {
+      // Updates firestore doc directly if existing recipe
+      if (this.currentRecipeId) {
+        await this.recipeRepo.updateRecipe(user.uid, this.currentRecipeId, recipeData);
+        console.log('Recipe updated successfully.')
+        return;
+      } 
+      
+      // Checks if recipe already exists by name
+      const existingRecipeDoc = await this.recipeRepo.getRecipeByName(recipeData.name);
+
+      // (if it does) Sets current id to that of found doc in firestore
+      if (!existingRecipeDoc.empty) {
+        this.currentRecipeId = existingRecipeDoc.docs[0].id;
+        await this.recipeRepo.updateRecipe(this.currentRecipeId, recipeData);
+        console.log('Existing recipe updated successfully.');
+      } else {
+        const newDocRef = await this.recipeRepo.addRecipe({
+          ...recipeData, 
+          createdAt: new Date(),
+        });
+
+        this.currentRecipeId = newDocRef.id;
+        console.log('Recipe created successfully.');
       }
-
-
-      // ====================================
-      const user = await this.authService.getCurrentUser();
-      // ====================================
-
-
-      try {
-        // Updates firestore doc directly if existing recipe
-        if (this.currentRecipeId) {
-          await this.recipeRepo.updateRecipe(this.currentRecipeId, recipeData);
-          console.log('Recipe updated successfully.')
-          return;
-        } 
-        
-        // Checks if recipe already exists by name
-        const existingRecipeDoc = await this.recipeRepo.getRecipeByName(recipeData.name);
-
-        // (if it does) Sets current id to that of found doc in firestore
-        if (!existingRecipeDoc.empty) {
-          this.currentRecipeId = existingRecipeDoc.docs[0].id;
-          await this.recipeRepo.updateRecipe(this.currentRecipeId, recipeData);
-          console.log('Existing recipe updated successfully.');
-        } else {
-          const newDocRef = await this.recipeRepo.addRecipe({
-            ...recipeData, 
-            createdAt: new Date(),
-          });
-
-          this.currentRecipeId = newDocRef.id;
-          console.log('Recipe created successfully.');
-        }
-      } catch (err) {
-        console.error('Error saving recipe:', err);
-      }
-    } else {
-      console.warn('Recipe name is required before saving.');
+    } catch (err) {
+      console.error('Error saving recipe:', err);
     }
   }
 }
