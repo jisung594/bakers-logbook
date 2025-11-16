@@ -22,16 +22,6 @@ import { recipeConverter } from '../models/recipe.model';
 export class RecipeFirestoreService {
   constructor(private firestore: Firestore) {}
 
-  addRecipe(uid: string, recipe: Recipe) {
-    const recipesRef = this.getUserRecipesRef(uid);
-    
-    return addDoc(recipesRef, {
-      ...recipe,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
-  }
-
   getUserRecipesRef(uid: string) {
     return collection(this.firestore, `users/${uid}/recipes`);
   }
@@ -46,6 +36,16 @@ export class RecipeFirestoreService {
 //     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
 //   }
   
+  addRecipe(uid: string, recipe: Recipe) {
+    const recipesRef = this.getUserRecipesRef(uid);
+    
+    return addDoc(recipesRef, {
+      ...recipe,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+  }
+
   updateRecipe(uid: string, recipeId: string, data: Partial<Recipe>) {
     const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`);
     return updateDoc(recipeDoc, { 
