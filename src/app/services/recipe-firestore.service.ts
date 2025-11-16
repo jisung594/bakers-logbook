@@ -32,10 +32,15 @@ export class RecipeFirestoreService {
     });
   }
 
-  getRecipes(): Observable<Recipe[]> {
-    const recipesRef = collection(this.firestore, 'recipes');
+  getUserRecipes(uuid: string): Observable<Recipe[]> {
+    const recipesRef = collection(this.firestore, `users/${uuid}/recipes`);
     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
   }
+
+//   getRecipes(): Observable<Recipe[]> {
+//     const recipesRef = collection(this.firestore, 'recipes');
+//     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
+//   }
   
   updateRecipe(id: string, data: Partial<Recipe>) {
     const recipeDoc = doc(this.firestore, `recipes/${id}`);
