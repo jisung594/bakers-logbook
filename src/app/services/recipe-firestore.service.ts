@@ -22,8 +22,8 @@ import { recipeConverter } from '../models/recipe.model';
 export class RecipeFirestoreService {
   constructor(private firestore: Firestore) {}
 
-  addRecipe(recipe: Recipe) {
-    const recipesRef = collection(this.firestore, 'recipes');
+  addRecipe(uid: string, recipe: Recipe) {
+    const recipesRef = this.getUserRecipesRef(uid);
     
     return addDoc(recipesRef, {
       ...recipe,
@@ -36,8 +36,8 @@ export class RecipeFirestoreService {
     return collection(this.firestore, `users/${uid}/recipes`);
   }
 
-  getUserRecipes(uuid: string): Observable<Recipe[]> {
-    const recipesRef = collection(this.firestore, `users/${uuid}/recipes`);
+  getUserRecipes(uid: string): Observable<Recipe[]> {
+    const recipesRef = this.getUserRecipesRef(uid);
     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
   }
 
@@ -46,14 +46,17 @@ export class RecipeFirestoreService {
 //     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
 //   }
   
-  updateRecipe(id: string, data: Partial<Recipe>) {
-    const recipeDoc = doc(this.firestore, `recipes/${id}`);
-    return updateDoc(recipeDoc, { ...data, updatedAt: new Date() });
+  updateRecipe(uid: string, recipeId: string, data: Partial<Recipe>) {
+    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`);
+    return updateDoc(recipeDoc, { 
+        ...data, 
+        updatedAt: new Date()
+    });
   }
   
   // Returns promise of a snapshot (matching recipe doc)
-  async getRecipeByName(name: string): Promise<QuerySnapshot<Recipe>> {
-    const recipesRef = collection(this.firestore, 'recipes').withConverter(recipeConverter);
+  async getRecipeByName(uid: string, name: string): Promise<QuerySnapshot<Recipe>> {
+    const recipesRef = this.getUserRecipesRef(uid).withConverter(recipeConverter);
     const q = query(recipesRef, where('name', '==', name));
     return getDocs(q);
   }
