@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
+import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
 import { FormsModule } from '@angular/forms';
 
@@ -25,7 +26,10 @@ export class RecipeForm {
   instructions: any[] = [];
   currentRecipeId: string | null = null;
 
-  constructor(private recipeRepo: RecipeFirestoreService) {}
+  constructor(
+    private authService: AuthService,
+    private recipeRepo: RecipeFirestoreService
+  ) {}
 
   editRecipeName() {
     this.recipeName.isEditing = true;
@@ -52,6 +56,12 @@ export class RecipeForm {
         instructions: this.instructions,
         updatedAt: new Date(),
       }
+
+
+      // ====================================
+      const user = await this.authService.getCurrentUser();
+      // ====================================
+
 
       try {
         // Updates firestore doc directly if existing recipe

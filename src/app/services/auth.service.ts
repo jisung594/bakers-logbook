@@ -20,6 +20,10 @@ export class AuthService {
     this.authState$ = authState(this.auth); // built-in Firebase Observable (manages + reacts to changes in authentication state)
   }
 
+  getCurrentUser() {
+    return this.auth.currentUser;
+  }
+
   async signInWithGoogle() {
     const provider = new GoogleAuthProvider();
 
