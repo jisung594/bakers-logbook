@@ -3,4 +3,6 @@
 
 <div *ngIf="user" class="logged-in">
     <span>Hello, {{ user.displayName }}!</span>
+
+    <button (click)="handleSignOut()">Sign Out</button>
 </div>
