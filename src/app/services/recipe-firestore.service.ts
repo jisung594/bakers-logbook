@@ -32,6 +32,10 @@ export class RecipeFirestoreService {
     });
   }
 
+  getUserRecipesRef(uid: string) {
+    return collection(this.firestore, `users/${uid}/recipes`);
+  }
+
   getUserRecipes(uuid: string): Observable<Recipe[]> {
     const recipesRef = collection(this.firestore, `users/${uuid}/recipes`);
     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
