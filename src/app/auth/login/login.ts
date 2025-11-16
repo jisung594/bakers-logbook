@@ -30,4 +30,14 @@ export class Login implements OnInit {
       console.log("Login error:", err);
     }
   }
+
+  async handleSignOut() {
+    try {
+      await this.authService.signOut();
+      this.user = null;
+      console.log("Signed out");
+    } catch (err) {
+      console.log("Sign-out error:", err);
+    }
+  }
 }
