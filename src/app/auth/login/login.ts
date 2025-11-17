@@ -15,7 +15,7 @@ export class Login implements OnInit {
 
   constructor(private authService: AuthService) {}
 
-  // Called once when component is ready
+  // Called after input properties are set, but before DOM is ready
   ngOnInit() {
     this.authService.authState$.subscribe(user => {
       this.user = user;
