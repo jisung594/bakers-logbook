@@ -3,6 +3,7 @@ import {
     addDoc, 
     collection,
     collectionData,
+    deleteDoc,
     doc,
     Firestore,
     getDocs,
@@ -50,8 +51,13 @@ export class RecipeFirestoreService {
     const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`);
     return updateDoc(recipeDoc, { 
         ...data, 
-        updatedAt: new Date()
+        updatedAt: serverTimestamp()
     });
+  }
+
+  deleteRecipe(uid: string, recipeId: string) {
+    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`);
+    return deleteDoc(recipeDoc);
   }
   
   // Returns promise of a snapshot (matching recipe doc)
