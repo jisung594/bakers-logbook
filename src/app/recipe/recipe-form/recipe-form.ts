@@ -75,21 +75,30 @@ export class RecipeForm {
     try {
       // Updates firestore doc directly if existing recipe
       if (this.currentRecipeId) {
-        await this.recipeRepo.updateRecipe(user.uid, this.currentRecipeId, recipeData);
+        await this.recipeRepo.updateRecipe(
+          user.uid, 
+          this.currentRecipeId, 
+          recipeData
+        );
         console.log('Recipe updated successfully.')
         return;
       } 
       
       // Checks if recipe already exists by name
-      const existingRecipeDoc = await this.recipeRepo.getRecipeByName(recipeData.name);
+      const existingRecipeDoc = await this.recipeRepo.getRecipeByName(user.uid, recipeData.name);
 
       // (if it does) Sets current id to that of found doc in firestore
       if (!existingRecipeDoc.empty) {
         this.currentRecipeId = existingRecipeDoc.docs[0].id;
-        await this.recipeRepo.updateRecipe(this.currentRecipeId, recipeData);
+        
+        await this.recipeRepo.updateRecipe(
+          user.uid,
+          this.currentRecipeId, 
+          recipeData
+        );
         console.log('Existing recipe updated successfully.');
       } else {
-        const newDocRef = await this.recipeRepo.addRecipe({
+        const newDocRef = await this.recipeRepo.addRecipe(user.uid, {
           ...recipeData, 
           createdAt: new Date(),
         });
