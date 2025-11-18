@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Header } from './header/header';
-import { RecipeForm } from './recipe/recipe-form/recipe-form';
+import { Recipe } from './pages/recipe/recipe';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { RecipeForm } from './recipe/recipe-form/recipe-form';
     CommonModule,
     RouterModule,
     Header,
-    RecipeForm,
+    Recipe,
   ],
 })
 export class App {
