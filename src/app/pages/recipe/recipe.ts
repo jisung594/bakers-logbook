@@ -7,17 +7,17 @@ import { RecipeFirestoreService } from '../../services/recipe-firestore.service'
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-recipe-form',
+  selector: 'app-recipe',
   imports: [
     CommonModule, 
     FormsModule, 
     IngredientsForm, 
     InstructionsForm
   ],
-  templateUrl: './recipe-form.html',
-  styleUrl: './recipe-form.css'
+  templateUrl: './recipe.html',
+  styleUrl: './recipe.css'
 })
-export class RecipeForm {
+export class Recipe {
   recipeName = {
     value: '',
     isEditing: true,
