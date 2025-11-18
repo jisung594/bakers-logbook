@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Header } from './header/header';
 import { RecipeForm } from './recipe/recipe-form/recipe-form';
 
@@ -9,7 +10,8 @@ import { RecipeForm } from './recipe/recipe-form/recipe-form';
   standalone: true,
   styleUrl: './app.css',
   imports: [
-    CommonModule, 
+    CommonModule,
+    RouterModule,
     Header,
     RecipeForm,
   ],
