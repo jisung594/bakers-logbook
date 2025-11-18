@@ -1,3 +1,7 @@
-<p>placeholder for HEADER component</p>
-
 <app-login></app-login>
+
+<!-- Subscribes to user observable and displays if found valid -->
+<!-- <a *ngIf="user$ as user | async" routerLink="/profile">  -->
+<a *ngIf="user$ | async" routerLink="/profile">
+    my recipes
+</a>
