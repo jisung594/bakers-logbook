@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './recipe.css'
 })
 export class Recipe {
-  recipeName = {
+  title = {
     value: '',
     isEditing: true,
   };
@@ -31,12 +31,12 @@ export class Recipe {
     private recipeRepo: RecipeFirestoreService
   ) {}
 
-  editRecipeName() {
-    this.recipeName.isEditing = true;
+  editTitle() {
+    this.title.isEditing = true;
   }
 
-  saveRecipeName() {
-    this.recipeName.isEditing = false;
+  saveTitle() {
+    this.title.isEditing = false;
   }
 
   onIngredientsChange(ingredients: any[]) {
@@ -49,13 +49,13 @@ export class Recipe {
 
   async saveRecipe() {
     // Requires at least a valid recipe name upon submit
-    if (!this.recipeName?.value) {
+    if (!this.title?.value) {
       console.warn("Recipe name is required before saving.");
       return;
     }
 
     const recipeData = {
-      name: this.recipeName.value,
+      title: this.title.value,
       ingredients: this.ingredients,
       instructions: this.instructions,
       updatedAt: new Date(),
@@ -85,7 +85,7 @@ export class Recipe {
       } 
       
       // Checks if recipe already exists by name
-      const existingRecipeDoc = await this.recipeRepo.getRecipeByName(user.uid, recipeData.name);
+      const existingRecipeDoc = await this.recipeRepo.getRecipeByName(user.uid, recipeData.title);
 
       // (if it does) Sets current id to that of found doc in firestore
       if (!existingRecipeDoc.empty) {
