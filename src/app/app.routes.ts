@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    // {
-    //     path: '',
-    //     // Lazy loads the Home component
-    //     loadComponent: () =>
-    //         import('./pages/home/home').then(module => module.Home)
-    // },
+    {
+        path: '',
+        // Lazy loads the Home component
+        loadComponent: () =>
+            import('./pages/home/home').then(module => module.Home)
+    },
     {
         path: 'recipe',
         // Lazy loads the Recipe component
