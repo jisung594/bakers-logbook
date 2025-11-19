@@ -1,20 +1,20 @@
 <div class="recipe">
-    <div *ngIf="recipeName.isEditing; else viewMode">
+    <div *ngIf="title.isEditing; else viewMode">
         <input 
             type="text" 
-            id="recipe-name"
-            [(ngModel)]="recipeName.value"
-            placeholder="Recipe Name"
+            id="recipe-title"
+            [(ngModel)]="title.value"
+            placeholder="Title"
         />
         <div class="editing-options-editmode">
-            <button type="button" (click)="saveRecipeName()">Save</button>
+            <button type="button" (click)="saveTitle()">Save</button>
         </div>
     </div>
 
     <ng-template #viewMode>
         <div class="editing-options-viewmode">
-            <h2>{{ recipeName.value || 'Untitled Recipe' }}</h2>
-            <button type="button" (click)="editRecipeName()">edit</button>
+            <h2>{{ title.value || 'Untitled Recipe' }}</h2>
+            <button type="button" (click)="editTitle()">edit</button>
         </div>
     </ng-template>
 
