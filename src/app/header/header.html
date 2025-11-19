@@ -1,7 +1,7 @@
 <app-login></app-login>
 
+<a routerLink="/">home</a>
+
 <!-- Subscribes to user observable and displays if found valid -->
 <!-- <a *ngIf="user$ as user | async" routerLink="/profile">  -->
-<a *ngIf="user$ | async" routerLink="/profile">
-    my recipes
-</a>
+<a *ngIf="user$ | async" routerLink="/profile">my recipes</a>
