@@ -2,7 +2,6 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Header } from './header/header';
-import { Recipe } from './pages/recipe/recipe';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,6 @@ import { Recipe } from './pages/recipe/recipe';
     CommonModule,
     RouterModule,
     Header,
-    Recipe,
   ],
 })
 export class App {

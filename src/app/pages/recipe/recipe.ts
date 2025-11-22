@@ -48,9 +48,9 @@ export class Recipe {
   }
 
   async saveRecipe() {
-    // Requires at least a valid recipe name upon submit
+    // Requires at least a valid recipe title upon submit
     if (!this.title?.value) {
-      console.warn("Recipe name is required before saving.");
+      console.warn("Recipe title is required before saving.");
       return;
     }
 
@@ -84,8 +84,8 @@ export class Recipe {
         return;
       } 
       
-      // Checks if recipe already exists by name
-      const existingRecipeDoc = await this.recipeRepo.getRecipeByName(user.uid, recipeData.title);
+      // Checks if recipe already exists by title
+      const existingRecipeDoc = await this.recipeRepo.getRecipeByTitle(user.uid, recipeData.title);
 
       // (if it does) Sets current id to that of found doc in firestore
       if (!existingRecipeDoc.empty) {
