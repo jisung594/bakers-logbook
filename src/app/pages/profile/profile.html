@@ -1,1 +1,7 @@
-<p>profile works!</p>
+<h3>my recipes</h3>
+
+<div *ngIf="recipes$ | async as recipes">
+    <span *ngFor="let r of recipes">
+        {{ r.title }}
+    </span>
+</div>
