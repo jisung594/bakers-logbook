@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
 import { AuthService } from '../../services/auth.service';
@@ -12,7 +12,7 @@ import { RecipeFirestoreService } from '../../services/recipe-firestore.service'
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
-export class Profile {
+export class Profile implements OnInit {
   // $ (syntax for observable)
   // ! (not initialized in constructor, but
   //   promises to assign value before accessed)
@@ -24,11 +24,14 @@ export class Profile {
   ) {}
 
   // Called after input properties are set, but before DOM is ready
-  async ngOnInIt() {
-    const user = this.authService.getCurrentUser();
-
-    if (user) {
-      this.recipes$ = this.firestoreService.getUserRecipes(user.uid);
-    }
+  async ngOnInit() {
+    // Reacts to changes to user state
+    await this.authService.authState$.subscribe(user => {
+      if (user) {
+        this.recipes$ = this.firestoreService.getUserRecipes(user.uid);
+      } else {
+        console.warn("No user logged in");
+      }
+    });
   }
 }
