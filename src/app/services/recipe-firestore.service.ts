@@ -3,6 +3,7 @@ import {
     addDoc, 
     collection,
     collectionData,
+    CollectionReference,
     deleteDoc,
     doc,
     Firestore,
@@ -14,8 +15,7 @@ import {
     where
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Recipe } from '../models/recipe.model';
-import { recipeConverter } from '../models/recipe.model';
+import { recipeConverter, Recipe } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,19 +23,21 @@ import { recipeConverter } from '../models/recipe.model';
 export class RecipeFirestoreService {
   constructor(private firestore: Firestore) {}
 
-  getUserRecipesRef(uid: string) {
-    return collection(this.firestore, `users/${uid}/recipes`);
+  getUserRecipesRef(uid: string): CollectionReference<Recipe> {
+    // Note: just a pointer (ref) to the collection
+    return collection(this.firestore, `users/${uid}/recipes`).withConverter(recipeConverter);
   }
 
   getUserRecipes(uid: string): Observable<Recipe[]> {
     const recipesRef = this.getUserRecipesRef(uid);
-    return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
-  }
 
-//   getRecipes(): Observable<Recipe[]> {
-//     const recipesRef = collection(this.firestore, 'recipes');
-//     return collectionData(recipesRef, { idField: 'id' }) as Observable<Recipe[]>;
-//   }
+    // Note: this was added to resolve "Expected type '_Query', but it was: a custom _CollectionReference object"
+    // but it allows for chaining filters / orders later
+    const recipesQuery = query(recipesRef);
+
+    // Converts ref (or query) into Observable and listens for changes
+    return collectionData(recipesQuery, { idField: 'id' }) as Observable<Recipe[]>;
+  }
   
   addRecipe(uid: string, recipe: Recipe) {
     const recipesRef = this.getUserRecipesRef(uid);
@@ -48,7 +50,7 @@ export class RecipeFirestoreService {
   }
 
   updateRecipe(uid: string, recipeId: string, data: Partial<Recipe>) {
-    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`);
+    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(recipeConverter);
     return updateDoc(recipeDoc, { 
         ...data, 
         updatedAt: serverTimestamp()
@@ -56,14 +58,14 @@ export class RecipeFirestoreService {
   }
 
   deleteRecipe(uid: string, recipeId: string) {
-    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`);
+    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(recipeConverter);
     return deleteDoc(recipeDoc);
   }
   
   // Returns promise of a snapshot (matching recipe doc)
-  async getRecipeByName(uid: string, name: string): Promise<QuerySnapshot<Recipe>> {
-    const recipesRef = this.getUserRecipesRef(uid).withConverter(recipeConverter);
-    const q = query(recipesRef, where('name', '==', name));
-    return getDocs(q);
+  async getRecipeByTitle(uid: string, title: string): Promise<QuerySnapshot<Recipe>> {
+    const recipesRef = this.getUserRecipesRef(uid);
+    const q = query(recipesRef, where('title', '==', title));
+    return await getDocs(q);
   }
 }
