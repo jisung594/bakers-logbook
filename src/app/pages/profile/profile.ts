@@ -26,7 +26,7 @@ export class Profile implements OnInit {
   // Called after input properties are set, but before DOM is ready
   async ngOnInit() {
     // Reacts to changes to user state
-    await this.authService.authState$.subscribe(user => {
+    this.authService.authState$.subscribe(user => {
       if (user) {
         this.recipes$ = this.firestoreService.getUserRecipes(user.uid);
       } else {
