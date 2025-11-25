@@ -4,8 +4,10 @@
             type="text" 
             id="recipe-title"
             [(ngModel)]="title.value"
+            [readonly]="!editable"
             placeholder="Title"
         />
+         <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
         <div class="editing-options-editmode">
             <button type="button" (click)="saveTitle()">Save</button>
         </div>
@@ -19,13 +21,21 @@
     </ng-template>
 
     <h3>INGREDIENTS</h3>
-    <app-ingredients-form (ingredientsChange)="onIngredientsChange($event)">
+    <app-ingredients-form
+        [ingredients]="ingredients"
+        [editable]="editable"
+        (ingredientsChange)="onIngredientsChange($event)"
+    >
     </app-ingredients-form>
 
     <h3>INSTRUCTIONS</h3>
-    <app-instructions-form (instructionsChange)="onInstructionsChange($event)">
+    <app-instructions-form
+        [instructions]="instructions"
+        [editable]="editable"
+        (instructionsChange)="onInstructionsChange($event)"
+    >
     </app-instructions-form>
 
-    <!-- TODO: submit button for saving data to Firestore here -->
+    <!-- TODO: submit button for saving data to Firestore here  -->
     <button type="button" (click)="saveRecipe()">Save Recipe</button>
 </div>
