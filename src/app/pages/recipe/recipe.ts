@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
@@ -18,12 +18,19 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './recipe.css'
 })
 export class Recipe {
+  // using @Input, instead of local vars, for parent component RecipeDetail 
+  // to pass in initial ingredients/instructions data
+
+  // Allows this component to be reused as form with CREATE, EDIT, and READ-ONLY modes
+  @Input() ingredients: IngredientsForm[] = [];
+  @Input() instructions: InstructionsForm[] = [];
+  @Input() editable = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
+  // mode: 'view' | 'edit' = 'view';  // internal mode
+
   title = {
     value: '',
     isEditing: true,
   };
-  ingredients: any[] = [];
-  instructions: any[] = [];
   currentRecipeId: string | null = null;
 
   constructor(
@@ -39,10 +46,12 @@ export class Recipe {
     this.title.isEditing = false;
   }
 
+  // Runs when a IngredientsForm (child) emits an @Output
   onIngredientsChange(ingredients: any[]) {
     this.ingredients = ingredients;
   }
 
+  // Runs when a InstructionsForm (child) emits an @Output
   onInstructionsChange(instructions: any[]) {
     this.instructions = instructions;
   }
