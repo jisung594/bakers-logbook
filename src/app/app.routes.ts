@@ -11,7 +11,7 @@ export const routes: Routes = [
         path: 'recipe',
         // Lazy loads the Recipe component
         loadComponent: () =>
-            import('./pages/recipe/recipe').then(module => module.Recipe)
+            import('./pages/recipe-editor/recipe-editor').then(module => module.RecipeEditor)
     },
         {
         path: 'profile',
