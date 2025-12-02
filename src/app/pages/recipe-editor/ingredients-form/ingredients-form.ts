@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { 
   FormArray, 
   FormBuilder,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
+import { Ingredient } from '../../../models/recipe.model';
 
 @Component({
   selector: 'app-ingredients-form',
@@ -17,6 +18,8 @@ import { RecipeFirestoreService } from '../../../services/recipe-firestore.servi
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class IngredientsForm {
+  @Input() initialIngredients: IngredientsForm[] = [];
+  @Input() editable = true;
   @Output() ingredientsChange = new EventEmitter<any[]>();
 
   ingredientsForm: FormGroup;
@@ -66,21 +69,7 @@ export class IngredientsForm {
   }
 
   emitChange() {
-    this.ingredientsChange.emit(this.ingredientsForm.value.ingredients);
+    // this.ingredientsChange.emit(this.ingredientsForm.value.ingredients);
+    this.ingredientsChange.emit(this.ingredientsForm.value.ingredients as Ingredient[]);
   }
-
-  // async onSubmit() {
-  //   if (this.ingredientsForm.valid) {
-  //     try {
-  //       await this.recipeRepo.addRecipe(this.ingredientsForm.value).then(() => {
-  //         console.log('Recipe saved to Firestore.', this.ingredientsForm.value);
-  //         this.ingredientsForm.reset();
-  //         this.ingredients.clear();
-  //         this.addIngredient(); // Adds one blank field (default form)
-  //       }); 
-  //     } catch (err) {
-  //       console.error('Error saving recipe:', err);
-  //     }
-  //   }
-  // }
 }
