@@ -1,4 +1,4 @@
-<div class="recipe">
+<div class="recipe-editor">
     <div *ngIf="title.isEditing; else viewMode">
         <input 
             type="text" 
@@ -22,7 +22,7 @@
 
     <h3>INGREDIENTS</h3>
     <app-ingredients-form
-        [ingredients]="ingredients"
+        [initialIngredients]="ingredients"
         [editable]="editable"
         (ingredientsChange)="onIngredientsChange($event)"
     >
@@ -30,7 +30,7 @@
 
     <h3>INSTRUCTIONS</h3>
     <app-instructions-form
-        [instructions]="instructions"
+        [initialInstructions]="instructions"
         [editable]="editable"
         (instructionsChange)="onInstructionsChange($event)"
     >

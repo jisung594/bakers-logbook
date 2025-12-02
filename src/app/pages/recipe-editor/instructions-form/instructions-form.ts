@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { 
   FormArray, 
   FormBuilder, 
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
+import { Instruction } from '../../../models/recipe.model';
 
 @Component({
   selector: 'app-instructions-form',
@@ -20,6 +21,8 @@ import { RecipeFirestoreService } from '../../../services/recipe-firestore.servi
   styleUrl: './instructions-form.css'
 })
 export class InstructionsForm {
+  @Input() initialInstructions: InstructionsForm[] = [];
+  @Input() editable = true;
   @Output() instructionsChange = new EventEmitter<any[]>();
 
   instructionsForm: FormGroup;
@@ -71,6 +74,7 @@ export class InstructionsForm {
 
   // Emits change to instructions for RecipeForm (parent) to handle
   emitChange() {
-    this.instructionsChange.emit(this.instructionsForm.value.instructions);
+    // this.instructionsChange.emit(this.instructionsForm.value.instructions);
+    this.instructionsChange.emit(this.instructionsForm.value.instructions as Instruction[]);
   }
 }

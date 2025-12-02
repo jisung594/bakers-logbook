@@ -1,23 +1,26 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
-import { FormsModule } from '@angular/forms';
+import { Recipe } from '../../models/recipe.model';
+import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
+
 
 @Component({
-  selector: 'app-recipe',
+  selector: 'app-recipe-editor',
   imports: [
     CommonModule, 
     FormsModule, 
     IngredientsForm, 
     InstructionsForm
   ],
-  templateUrl: './recipe.html',
-  styleUrl: './recipe.css'
+  templateUrl: './recipe-editor.html',
+  styleUrl: './recipe-editor.css'
 })
-export class Recipe {
+export class RecipeEditor {
   // using @Input, instead of local vars, for parent component RecipeDetail 
   // to pass in initial ingredients/instructions data
 
@@ -63,12 +66,18 @@ export class Recipe {
       return;
     }
 
-    const recipeData = {
+    const recipeData: Partial<Recipe> = {
       title: this.title.value,
-      ingredients: this.ingredients,
-      instructions: this.instructions,
-      updatedAt: new Date(),
+      ingredients: mapIngredientRows(this.ingredients),
+      instructions: mapInstructionRows(this.instructions),
+      // updatedAt: new Date(),
     }
+    // const recipeData = {
+    //   title: this.title.value,
+    //   ingredients: this.ingredients,
+    //   instructions: this.instructions,
+    //   updatedAt: new Date(),
+    // }
 
 
     // ====================================
@@ -94,7 +103,7 @@ export class Recipe {
       } 
       
       // Checks if recipe already exists by title
-      const existingRecipeDoc = await this.recipeRepo.getRecipeByTitle(user.uid, recipeData.title);
+      const existingRecipeDoc = await this.recipeRepo.getRecipeByTitle(user.uid, recipeData.title.value);
 
       // (if it does) Sets current id to that of found doc in firestore
       if (!existingRecipeDoc.empty) {
