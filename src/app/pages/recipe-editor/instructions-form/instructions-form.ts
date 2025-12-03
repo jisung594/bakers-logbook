@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
 import { Instruction } from '../../../models/recipe.model';
+import { InstructionRow } from './instructions-form.types';
 
 @Component({
   selector: 'app-instructions-form',
@@ -21,9 +22,9 @@ import { Instruction } from '../../../models/recipe.model';
   styleUrl: './instructions-form.css'
 })
 export class InstructionsForm {
-  @Input() initialInstructions: InstructionsForm[] = [];
+  @Input() initialInstructions: InstructionRow[] = [];
   @Input() editable = true;
-  @Output() instructionsChange = new EventEmitter<any[]>();
+  @Output() instructionsChange = new EventEmitter<InstructionRow[]>();
 
   instructionsForm: FormGroup;
 
@@ -36,15 +37,23 @@ export class InstructionsForm {
     })
   }
 
-  get instructions(): FormArray {
-    return this.instructionsForm.get('instructions') as FormArray;
+  get instructions(): FormArray<InstructionRow> {
+    return this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
   }
 
-  createInstruction(order: number): FormGroup {
+  // createInstruction(order: number): FormGroup {
+  //   return this.fb.group({
+  //     step: ['', Validators.required],
+  //     order: [order],
+  //     isEditing: [true] // tracks edit/display mode
+  //   });
+  // }
+
+  createInstruction(order: number): InstructionRow {
     return this.fb.group({
-      step: ['', Validators.required],
-      order: [order],
-      isEditing: [true] // tracks edit/display mode
+      step: this.fb.control('', { nonNullable: true }),
+      order: this.fb.control(order, { nonNullable: true }),
+      isEditing: this.fb.control(true, { nonNullable: true }),
     });
   }
 
@@ -75,6 +84,7 @@ export class InstructionsForm {
   // Emits change to instructions for RecipeForm (parent) to handle
   emitChange() {
     // this.instructionsChange.emit(this.instructionsForm.value.instructions);
-    this.instructionsChange.emit(this.instructionsForm.value.instructions as Instruction[]);
+    this.instructionsChange.emit(this.instructions.controls as InstructionRow[]);
+    // this.instructionsChange.emit(this.instructionsForm.value.instructions as Instruction[]);
   }
 }
