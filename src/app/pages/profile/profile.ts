@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
@@ -8,7 +9,7 @@ import { RecipeFirestoreService } from '../../services/recipe-firestore.service'
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports:[CommonModule],
+  imports:[CommonModule, RouterModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
