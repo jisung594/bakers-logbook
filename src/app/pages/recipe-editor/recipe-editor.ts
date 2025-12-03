@@ -8,6 +8,7 @@ import { RecipeFirestoreService } from '../../services/recipe-firestore.service'
 import { Recipe } from '../../models/recipe.model';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
 import { IngredientRow } from './ingredients-form/ingredients-form.types';
+import { InstructionRow } from './instructions-form/instructions-form.types';
 
 @Component({
   selector: 'app-recipe-editor',
@@ -26,7 +27,7 @@ export class RecipeEditor {
 
   // Allows this component to be reused as form with CREATE, EDIT, and READ-ONLY modes
   @Input() ingredients: IngredientRow[] = [];
-  @Input() instructions: InstructionsForm[] = [];
+  @Input() instructions: InstructionRow[] = [];
   @Input() editable = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
   // mode: 'view' | 'edit' = 'view';  // internal mode
 
@@ -55,8 +56,8 @@ export class RecipeEditor {
   }
 
   // Runs when a InstructionsForm (child) emits an @Output
-  onInstructionsChange(instructions: any[]) {
-    this.instructions = instructions;
+  onInstructionsChange(rows: InstructionRow[]) {
+    this.instructions = rows;
   }
 
   async saveRecipe() {
@@ -118,7 +119,10 @@ export class RecipeEditor {
         console.log('Existing recipe updated successfully.');
       } else {
         const newDocRef = await this.recipeRepo.addRecipe(user.uid, {
-          ...recipeData, 
+          ...recipeData,
+          title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
+          ingredients: recipeData.ingredients ?? [],
+          instructions: recipeData.instructions ?? [],
           createdAt: new Date(),
         });
 
