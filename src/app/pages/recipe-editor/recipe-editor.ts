@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
 import { Recipe } from '../../models/recipe.model';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
-
+import { IngredientRow } from './ingredients-form/ingredients-form.types';
 
 @Component({
   selector: 'app-recipe-editor',
@@ -25,7 +25,7 @@ export class RecipeEditor {
   // to pass in initial ingredients/instructions data
 
   // Allows this component to be reused as form with CREATE, EDIT, and READ-ONLY modes
-  @Input() ingredients: IngredientsForm[] = [];
+  @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionsForm[] = [];
   @Input() editable = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
   // mode: 'view' | 'edit' = 'view';  // internal mode
@@ -50,8 +50,8 @@ export class RecipeEditor {
   }
 
   // Runs when a IngredientsForm (child) emits an @Output
-  onIngredientsChange(ingredients: any[]) {
-    this.ingredients = ingredients;
+  onIngredientsChange(rows: IngredientRow[]) {
+    this.ingredients = rows;
   }
 
   // Runs when a InstructionsForm (child) emits an @Output
@@ -103,7 +103,8 @@ export class RecipeEditor {
       } 
       
       // Checks if recipe already exists by title
-      const existingRecipeDoc = await this.recipeRepo.getRecipeByTitle(user.uid, recipeData.title.value);
+      // Note: ! asserts that title is non-null, since it's checked above (ie. if (!this.title?.value))
+      const existingRecipeDoc = await this.recipeRepo.getRecipeByTitle(user.uid, recipeData.title!);
 
       // (if it does) Sets current id to that of found doc in firestore
       if (!existingRecipeDoc.empty) {
