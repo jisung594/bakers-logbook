@@ -5,13 +5,23 @@ export const routes: Routes = [
         path: '',
         // Lazy loads the Home component
         loadComponent: () =>
-            import('./pages/home/home').then(module => module.Home)
+            import('./pages/home/home').then(
+                module => module.Home
+            )
     },
     {
-        path: 'recipe',
-        // Lazy loads the Recipe component
+        path: 'recipes/new',
         loadComponent: () =>
-            import('./pages/recipe-editor/recipe-editor').then(module => module.RecipeEditor)
+            import('./pages/recipe-editor/recipe-editor').then(
+                module => module.RecipeEditor
+            )
+    },
+    {
+        path: 'recipes/:id',
+        loadComponent: () =>
+            import('./pages/recipe-editor/recipe-editor').then(
+                module => module.RecipeEditor
+            )
     },
         {
         path: 'profile',
