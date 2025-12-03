@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
 import { Ingredient } from '../../../models/recipe.model';
+import { IngredientRow } from './ingredients-form.types';
 
 @Component({
   selector: 'app-ingredients-form',
@@ -18,10 +19,10 @@ import { Ingredient } from '../../../models/recipe.model';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class IngredientsForm {
-  @Input() initialIngredients: IngredientsForm[] = [];
+  @Input() initialIngredients: IngredientRow[] = [];
   @Input() editable = true;
-  @Output() ingredientsChange = new EventEmitter<any[]>();
-
+  @Output() ingredientsChange = new EventEmitter<IngredientRow[]>();
+  
   ingredientsForm: FormGroup;
 
   constructor(
@@ -34,16 +35,25 @@ export class IngredientsForm {
   }
 
   // Returns typed reference to the FormArray
-  get ingredients(): FormArray {
-    return this.ingredientsForm.get('ingredients') as FormArray;
+  get ingredients(): FormArray<IngredientRow> {
+    return this.ingredientsForm.get('ingredients') as FormArray<IngredientRow>;
   }
 
-  createIngredient(): FormGroup {
+  // createIngredient(): FormGroup {
+  //   return this.fb.group({
+  //     quantity: [''],
+  //     unit: [''],
+  //     name: ['', Validators.required],
+  //     isEditing: [true] // tracks edit/display mode
+  //   });
+  // }
+
+  createIngredient(): IngredientRow {
     return this.fb.group({
-      quantity: [''],
-      unit: [''],
-      name: ['', Validators.required],
-      isEditing: [true] // tracks edit/display mode
+      name: this.fb.control('', { nonNullable: true }),
+      quantity: this.fb.control('', { nonNullable: true }),
+      unit: this.fb.control('', { nonNullable: true }),
+      isEditing: this.fb.control(true, { nonNullable: true }),
     });
   }
 
@@ -70,6 +80,7 @@ export class IngredientsForm {
 
   emitChange() {
     // this.ingredientsChange.emit(this.ingredientsForm.value.ingredients);
-    this.ingredientsChange.emit(this.ingredientsForm.value.ingredients as Ingredient[]);
+    this.ingredientsChange.emit(this.ingredients.controls as IngredientRow[]);
+    // this.ingredientsChange.emit(this.ingredientsForm.value.ingredients as Ingredient[]);
   }
 }
