@@ -6,7 +6,7 @@
             [formGroupName]="i"
             class="ingredient-row"
         >
-            <div *ngIf="ingredient.value.isEditing">
+            <div *ngIf="ingredient.value.isEditing && editable">
                 <input
                     type="text"
                     formControlName="quantity"
@@ -32,7 +32,7 @@
                     <button type="button" (click)="removeIngredient(i)">×</button>
                 </div>
             </div>
-            <div *ngIf="!ingredient.value.isEditing">
+            <div *ngIf="!ingredient.value.isEditing || !editable">
                 <div class="editing-options-viewmode">
                 <p>
                     {{ ingredient.value.quantity }} 
