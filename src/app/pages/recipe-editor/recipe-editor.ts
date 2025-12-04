@@ -1,17 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
-import { Recipe } from '../../models/recipe.model';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
 import { IngredientRow } from './ingredients-form/ingredients-form.types';
 import { InstructionRow } from './instructions-form/instructions-form.types';
+import { Recipe } from '../../models/recipe.model';
 
 @Component({
   selector: 'app-recipe-editor',
+  standalone: true,
   imports: [
     CommonModule, 
     FormsModule, 
@@ -26,28 +27,40 @@ export class RecipeEditor {
   // to pass in initial ingredients/instructions data
 
   // Allows this component to be reused as form with CREATE, EDIT, and READ-ONLY modes
+  @Input() title: string = '';
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
-  @Input() editable = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
+  @Input() editable: boolean = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
   // mode: 'view' | 'edit' = 'view';  // internal mode
 
-  title = {
-    value: '',
-    isEditing: true,
-  };
+  isEditingTitle = false;
+  editingIngredients: boolean[] = []; 
+  editingInstructions: boolean[] = [];
   currentRecipeId: string | null = null;
 
   constructor(
     private authService: AuthService,
+    private fb: FormBuilder,
     private recipeRepo: RecipeFirestoreService
   ) {}
 
+  ngOnInit() {
+
+    console.log("INGREDIENTS", this.ingredients);
+    console.log("INSTRUCTIONS", this.instructions);
+
+
+    // initializes editing state arrays to "false" for each row
+    this.editingIngredients = this.ingredients.map(() => false);
+    this.editingInstructions = this.instructions.map(() => false);
+  }
+
   editTitle() {
-    this.title.isEditing = true;
+    this.isEditingTitle = true;
   }
 
   saveTitle() {
-    this.title.isEditing = false;
+    this.isEditingTitle = false;
   }
 
   // Runs when a IngredientsForm (child) emits an @Output
@@ -59,16 +72,50 @@ export class RecipeEditor {
   onInstructionsChange(rows: InstructionRow[]) {
     this.instructions = rows;
   }
+  
+  async loadRecipe(id: string) {
+    const user = await this.authService.getCurrentUser();
+    if (!user) return;
+
+    const docSnap = await this.recipeRepo.getRecipeById(user.uid, id);
+    if (docSnap.exists()) {
+      const recipe = docSnap.data();
+
+      this.title = recipe.title;
+
+
+      // ===========================================
+      this.ingredients = recipe.ingredients.map(i =>
+        this.fb.group({
+          name: this.fb.control(i.name, { nonNullable: true }),
+          quantity: this.fb.control(i.quantity, { nonNullable: true }),
+          unit: this.fb.control(i.unit, { nonNullable: true }),
+          isEditing: this.fb.control(false, { nonNullable: true }),
+        })
+      );
+      this.instructions = recipe.instructions.map(inst =>
+        this.fb.group({
+          step: this.fb.control(inst.step, { nonNullable: true }),
+          order: this.fb.control(inst.order, { nonNullable: true }),
+          isEditing: this.fb.control(false, { nonNullable: true }),
+        })
+      );
+      // ===========================================
+
+
+    }
+    //   // TODO: make sure to patch and set FormArray's (inside IngredientsForm / InstructionsForm) via inputs
+  }
 
   async saveRecipe() {
     // Requires at least a valid recipe title upon submit
-    if (!this.title?.value) {
+    if (!this.title) {
       console.warn("Recipe title is required before saving.");
       return;
     }
 
     const recipeData: Partial<Recipe> = {
-      title: this.title.value,
+      title: this.title,
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
       // updatedAt: new Date(),
