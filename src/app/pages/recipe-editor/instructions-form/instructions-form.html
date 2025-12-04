@@ -6,7 +6,7 @@
             [formGroupName]="i"
             class="instruction-row"
         >
-            <div *ngIf="instruction.value.isEditing">
+            <div *ngIf="instruction.value.isEditing && editable">
                 <textarea
                     formControlName="step"
                     placeholder="Step {{ i + 1 }}:"
@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div *ngIf="!instruction.value.isEditing">
+            <div *ngIf="!instruction.value.isEditing || !editable">
                 <p>{{ instruction.value.step }}</p>
 
                 <div class="editing-options-viewmode">
