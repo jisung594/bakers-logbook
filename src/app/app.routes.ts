@@ -19,8 +19,8 @@ export const routes: Routes = [
     {
         path: 'recipes/:id',
         loadComponent: () =>
-            import('./pages/recipe-editor/recipe-editor').then(
-                module => module.RecipeEditor
+            import('./pages/recipe-detail/recipe-detail').then(
+                module => module.RecipeDetail
             )
     },
         {
