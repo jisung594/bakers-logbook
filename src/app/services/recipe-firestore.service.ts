@@ -7,6 +7,7 @@ import {
     deleteDoc,
     doc,
     Firestore,
+    getDoc,
     getDocs,
     query,
     QuerySnapshot,
@@ -60,6 +61,11 @@ export class RecipeFirestoreService {
   deleteRecipe(uid: string, recipeId: string) {
     const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(recipeConverter);
     return deleteDoc(recipeDoc);
+  }
+  
+  async getRecipeById(uid: string, id: string) {
+    const docRef = doc(this.firestore, `users/${uid}/recipes/${id}`).withConverter(recipeConverter);
+    return await getDoc(docRef); // returns a DocumentSnapshot<Recipe>
   }
   
   // Returns promise of a snapshot (matching recipe doc)
