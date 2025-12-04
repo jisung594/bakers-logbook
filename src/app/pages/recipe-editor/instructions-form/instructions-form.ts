@@ -37,6 +37,15 @@ export class InstructionsForm {
     })
   }
 
+  ngOnInit() {
+    // Populates FormArray with initialInstructions input, if provided
+    if (this.initialInstructions.length) {
+      const instructionsFormArray = this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
+      instructionsFormArray.clear(); // Removes form controls unrelated to initialInstructions
+      this.initialInstructions.forEach(row => instructionsFormArray.push(row));
+    }
+  }
+
   get instructions(): FormArray<InstructionRow> {
     return this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
   }

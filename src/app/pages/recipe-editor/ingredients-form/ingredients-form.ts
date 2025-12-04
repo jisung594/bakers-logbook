@@ -34,6 +34,15 @@ export class IngredientsForm {
     });
   }
 
+  ngOnInit() {
+    // Populates FormArray with initialIngredients input, if provided
+    if (this.initialIngredients.length) {
+      const ingredientsFormArray = this.ingredientsForm.get('ingredients') as FormArray<IngredientRow>;
+      ingredientsFormArray.clear(); // Removes form controls unrelated to initialIngredients
+      this.initialIngredients.forEach(row => ingredientsFormArray.push(row));
+    }
+  }
+
   // Returns typed reference to the FormArray
   get ingredients(): FormArray<IngredientRow> {
     return this.ingredientsForm.get('ingredients') as FormArray<IngredientRow>;
