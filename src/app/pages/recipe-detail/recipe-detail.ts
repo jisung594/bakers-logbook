@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
 import { RecipeEditor } from '../recipe-editor/recipe-editor';
@@ -17,8 +18,9 @@ import { Recipe } from '../../models/recipe.model';
   styleUrl: './recipe-detail.css',
 })
 export class RecipeDetail {
-  recipeId: string | null = null;
+  private authSub?: Subscription; // only accessed/relevant within this scope
   recipe: Recipe | null = null;
+  recipeId: string | null = null;
   ingredientsRows: IngredientRow[] = [];
   instructionsRows: InstructionRow[] = [];
   editable = false; // view mode by default
@@ -31,34 +33,44 @@ export class RecipeDetail {
   ) {}
 
   async ngOnInit() {
-    const user = await this.authService.getCurrentUser();
-    if (!user) return;
 
-    const id = this.route.snapshot.paramMap.get('id')!; // asserts that id exists
-    const snapshot = await this.recipeRepo.getRecipeById(user.uid, id);
+    // =============================================================
+    // NOTE: removed, as this could miss updates or return null on refresh
+    // const user = await this.authService.getCurrentUser();
+    // if (!user) console.warn("No user logged in!!!");
+    // if (!user) return;
+    // =============================================================
 
-    if (snapshot.exists()) {
-      this.recipe = snapshot.data();
-    }
+    // Subscribes to auth state to get current user / data for given recipe id
+    this.authSub = this.authService.authState$.subscribe(async user => {
+      if (!user) return;
 
-    if (this.recipe) {
-      // RecipeEditor (child) expects FormGroup arrays for ingredients / instructions
-      // TODO: refactor RecipeEditor to accept plain arrays instead, to avoid this conversion
-      this.ingredientsRows = this.recipe.ingredients.map(i =>
-        this.fb.group({
-          name: this.fb.control(i.name, { nonNullable: true }),
-          quantity: this.fb.control(i.quantity, { nonNullable: true }),
-          unit: this.fb.control(i.unit, { nonNullable: true }),
-          isEditing: this.fb.control(false, { nonNullable: true }),
-        })
-      );
-      this.instructionsRows = this.recipe.instructions.map(i =>
-        this.fb.group({
-          step: this.fb.control(i.step, { nonNullable: true }),
-          order: this.fb.control(i.order, { nonNullable: true }),
-          isEditing: this.fb.control(false, { nonNullable: true }),
-        })
-      );
-    }
+      const id = this.route.snapshot.paramMap.get('id')!; // asserts that id exists
+      const snapshot = await this.recipeRepo.getRecipeById(user.uid, id);
+
+      if (snapshot.exists()) {
+        this.recipe = snapshot.data();
+      }
+
+      if (this.recipe) {
+        // RecipeEditor (child) expects FormGroup arrays for ingredients / instructions
+        // TODO: refactor RecipeEditor to accept plain arrays instead, to avoid this conversion
+        this.ingredientsRows = this.recipe.ingredients.map(i =>
+          this.fb.group({
+            name: this.fb.control(i.name, { nonNullable: true }),
+            quantity: this.fb.control(i.quantity, { nonNullable: true }),
+            unit: this.fb.control(i.unit, { nonNullable: true }),
+            isEditing: this.fb.control(false, { nonNullable: true }),
+          })
+        );
+        this.instructionsRows = this.recipe.instructions.map(i =>
+          this.fb.group({
+            step: this.fb.control(i.step, { nonNullable: true }),
+            order: this.fb.control(i.order, { nonNullable: true }),
+            isEditing: this.fb.control(false, { nonNullable: true }),
+          })
+        );
+      }
+    });
   }
 }
