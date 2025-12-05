@@ -37,7 +37,7 @@ export class RecipeDetail {
     // =============================================================
     // NOTE: removed, as this could miss updates or return null on refresh
     // const user = await this.authService.getCurrentUser();
-    // if (!user) console.warn("No user logged in!!!");
+    // if (!user) console.warn("No user logged in.");
     // if (!user) return;
     // =============================================================
 

@@ -3,12 +3,10 @@ import {
   FormArray, 
   FormBuilder, 
   FormGroup, 
-  ReactiveFormsModule, 
-  Validators 
+  ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
-import { Instruction } from '../../../models/recipe.model';
 import { InstructionRow } from './instructions-form.types';
 
 @Component({
@@ -50,14 +48,6 @@ export class InstructionsForm {
     return this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
   }
 
-  // createInstruction(order: number): FormGroup {
-  //   return this.fb.group({
-  //     step: ['', Validators.required],
-  //     order: [order],
-  //     isEditing: [true] // tracks edit/display mode
-  //   });
-  // }
-
   createInstruction(order: number): InstructionRow {
     return this.fb.group({
       step: this.fb.control('', { nonNullable: true }),
@@ -92,8 +82,6 @@ export class InstructionsForm {
 
   // Emits change to instructions for RecipeForm (parent) to handle
   emitChange() {
-    // this.instructionsChange.emit(this.instructionsForm.value.instructions);
     this.instructionsChange.emit(this.instructions.controls as InstructionRow[]);
-    // this.instructionsChange.emit(this.instructionsForm.value.instructions as Instruction[]);
   }
 }
