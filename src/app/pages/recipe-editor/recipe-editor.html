@@ -1,9 +1,9 @@
 <div class="recipe-editor">
-    <div *ngIf="title.isEditing; else viewMode">
+    <div *ngIf="isEditingTitle; else viewMode">
         <input 
             type="text" 
             id="recipe-title"
-            [(ngModel)]="title.value"
+            [(ngModel)]="title"
             [readonly]="!editable"
             placeholder="Title"
         />
@@ -15,7 +15,7 @@
 
     <ng-template #viewMode>
         <div class="editing-options-viewmode">
-            <h2>{{ title.value || 'Untitled Recipe' }}</h2>
+            <h2>{{ title || 'Untitled Recipe' }}</h2>
             <button type="button" (click)="editTitle()">edit</button>
         </div>
     </ng-template>
