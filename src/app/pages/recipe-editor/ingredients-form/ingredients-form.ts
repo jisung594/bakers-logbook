@@ -3,12 +3,10 @@ import {
   FormArray, 
   FormBuilder,
   FormGroup, 
-  ReactiveFormsModule, 
-  Validators
+  ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
-import { Ingredient } from '../../../models/recipe.model';
 import { IngredientRow } from './ingredients-form.types';
 
 @Component({
@@ -48,15 +46,6 @@ export class IngredientsForm {
     return this.ingredientsForm.get('ingredients') as FormArray<IngredientRow>;
   }
 
-  // createIngredient(): FormGroup {
-  //   return this.fb.group({
-  //     quantity: [''],
-  //     unit: [''],
-  //     name: ['', Validators.required],
-  //     isEditing: [true] // tracks edit/display mode
-  //   });
-  // }
-
   createIngredient(): IngredientRow {
     return this.fb.group({
       name: this.fb.control('', { nonNullable: true }),
@@ -88,8 +77,6 @@ export class IngredientsForm {
   }
 
   emitChange() {
-    // this.ingredientsChange.emit(this.ingredientsForm.value.ingredients);
     this.ingredientsChange.emit(this.ingredients.controls as IngredientRow[]);
-    // this.ingredientsChange.emit(this.ingredientsForm.value.ingredients as Ingredient[]);
   }
 }

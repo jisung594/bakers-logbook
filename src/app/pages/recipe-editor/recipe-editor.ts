@@ -31,7 +31,6 @@ export class RecipeEditor {
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
   @Input() editable: boolean = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
-  // mode: 'view' | 'edit' = 'view';  // internal mode
 
   isEditingTitle = false;
   editingIngredients: boolean[] = []; 
@@ -45,11 +44,6 @@ export class RecipeEditor {
   ) {}
 
   ngOnInit() {
-
-    console.log("INGREDIENTS", this.ingredients);
-    console.log("INSTRUCTIONS", this.instructions);
-
-
     // initializes editing state arrays to "false" for each row
     this.editingIngredients = this.ingredients.map(() => false);
     this.editingInstructions = this.instructions.map(() => false);
@@ -82,9 +76,6 @@ export class RecipeEditor {
       const recipe = docSnap.data();
 
       this.title = recipe.title;
-
-
-      // ===========================================
       this.ingredients = recipe.ingredients.map(i =>
         this.fb.group({
           name: this.fb.control(i.name, { nonNullable: true }),
@@ -100,11 +91,7 @@ export class RecipeEditor {
           isEditing: this.fb.control(false, { nonNullable: true }),
         })
       );
-      // ===========================================
-
-
     }
-    //   // TODO: make sure to patch and set FormArray's (inside IngredientsForm / InstructionsForm) via inputs
   }
 
   async saveRecipe() {
@@ -118,25 +105,13 @@ export class RecipeEditor {
       title: this.title,
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
-      // updatedAt: new Date(),
     }
-    // const recipeData = {
-    //   title: this.title.value,
-    //   ingredients: this.ingredients,
-    //   instructions: this.instructions,
-    //   updatedAt: new Date(),
-    // }
-
-
-    // ====================================
     const user = await this.authService.getCurrentUser();
     
     if (!user) {
       console.warn("You must be signed in to save recipes.");
       return;
     }
-    // ====================================
-
 
     try {
       // Updates firestore doc directly if existing recipe
