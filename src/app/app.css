@@ -1,0 +1,22 @@
+:root {
+  --bg: #faf7f2;
+  --text: #333;
+  --accent: #e7b886;
+  --accent-dark: #d7a060;
+  --border-radius: 8px;
+  --spacing: 0.75rem;
+  --font-body: 'Playfair Display', serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  margin: 0;
+}
+
+.app-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
