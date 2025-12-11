@@ -1,6 +1,6 @@
 <nav class="flex items-center justify-between px-6 py-1 bg-white shadow">
     <a routerLink="/">home</a>
-    <a routerLink="/recipe">new recipe</a>
+    <a routerLink="recipes/new">new recipe</a>
     <!-- <a *ngIf="user$ as user | async" routerLink="/profile">  -->
     <a *ngIf="user$ | async" routerLink="/profile">my recipes</a> <!-- Subscribes to user observable and displays if found valid -->
 
