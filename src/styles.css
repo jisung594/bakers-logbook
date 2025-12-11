@@ -1,9 +1,36 @@
 @import "tailwindcss";
 
-/* Global font base. */
-body {
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+@font-face {
+  font-family: "Spectral";
+  src: url("/assets/fonts/Spectral-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 
+@font-face {
+  font-family: "Work Sans";
+  src: url("/assets/fonts/WorkSans-Regular.ttf") format("truetype");
+}
 
-/* You can add global styles to this file, and also import other style files */
+@utility bg-white {
+  background-color: var(--bg);
+}
+
+@utility bg-testpink {
+  background-color: var(--testpink);
+}
+
+@theme {
+  --font-heading: "Spectral", serif;
+  --font-body: "Work Sans", sans-serif;
+
+  --bg: #ffffff;
+  --text: #333;
+  --accent: #d44930;
+  --accent-dark: #a53e12;
+  --border-radius: 8px;
+  --spacing: 0.75rem;
+
+
+  --testpink: #ff00ff;
+}
