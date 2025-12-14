@@ -1,11 +1,15 @@
 <div class="recipe-editor">
-    <div *ngIf="isEditingTitle; else viewMode">
+    <div 
+        *ngIf="isEditingTitle; else viewMode"
+        class="flex"
+    >
         <input 
             type="text" 
             id="recipe-title"
             [(ngModel)]="title"
             [readonly]="!editable"
             placeholder="Title"
+            class="outline-1 px-3 py-2 w-full mb-2"
         />
          <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
         <div class="editing-options-editmode">
@@ -37,5 +41,9 @@
     </app-instructions-form>
 
     <!-- TODO: submit button for saving data to Firestore here  -->
-    <button type="button" (click)="saveRecipe()">Save Recipe</button>
+    <button 
+        type="button" 
+        class="bg-accent p-1"
+        (click)="saveRecipe()"
+    >Save Recipe</button>
 </div>
