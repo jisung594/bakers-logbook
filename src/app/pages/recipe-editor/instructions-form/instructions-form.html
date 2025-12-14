@@ -1,33 +1,54 @@
 <form [formGroup]="instructionsForm">
 <!-- <form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()"></form> -->
-    <div formArrayName="instructions">
+    <div formArrayName="instructions" class="">
         <div
             *ngFor="let instruction of instructions.controls; let i = index"
             [formGroupName]="i"
-            class="instruction-row"
+            class="instruction-row outline-1"
         >
-            <div *ngIf="instruction.value.isEditing && editable">
-                <textarea
-                    formControlName="step"
-                    placeholder="Step {{ i + 1 }}:"
-                    class="instruction-input"
-                ></textarea>
+            <div 
+                *ngIf="instruction.value.isEditing && editable" 
+                class="flex flex-col space-y-2"
+            >
 
-                <div class="editing-options-editmode">
-                    <button type="button" (click)="saveInstruction(i)">Save</button>
-                    <button type="button" (click)="removeInstruction(i)">×</button>
+                <div class="flex w-full gap-2 items-center">
+                <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
+                    <textarea
+                        formControlName="step"
+                        placeholder="Step {{ i + 1 }}:"
+                        class="
+                            instruction-input 
+                            outline-1
+                            grow
+                            py-2
+                            px-3
+                        "
+                    ></textarea>
+                </div>
+
+
+
+                <div class="editing-options-editmode flex shrink-0 gap-1">
+                    <button type="button" (click)="saveInstruction(i)" class="bg-accent-dark">&check;</button>
+                    <button type="button" (click)="removeInstruction(i)">&#10006;</button>
                 </div>
             </div>
 
             <div *ngIf="!instruction.value.isEditing || !editable">
-                <p>{{ instruction.value.step }}</p>
+                <div class="flex p-1 gap-2">
+                    <p class="">{{ instruction.value.step }}</p>
+                </div>
 
-                <div class="editing-options-viewmode">
+                <div class="editing-options-viewmode flex p-1 gap-2">
                     <button type="button" (click)="editInstruction(i)">edit</button>
                     <button type="button" (click)="removeInstruction(i)">remove</button>
                 </div>
             </div>
         </div>
     </div>
-    <button type="button" (click)="addInstruction()">Add Step +</button>
+    <button
+        type="button"
+        class=""
+        (click)="addInstruction()"
+    >Add Step +</button>
 </form>
