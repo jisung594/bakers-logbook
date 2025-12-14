@@ -1,10 +1,10 @@
-<form [formGroup]="instructionsForm">
+<form [formGroup]="instructionsForm" class="mb-2">
   <!-- <form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()"></form> -->
   <div formArrayName="instructions" class="">
     <div
       *ngFor="let instruction of instructions.controls; let i = index"
       [formGroupName]="i"
-      class="instruction-row outline-1"
+      class="instruction-row"
     >
       <div *ngIf="instruction.value.isEditing && editable" class="flex flex-col space-y-2">
         <div class="flex w-full gap-2 items-center">
@@ -23,13 +23,20 @@
       </div>
 
       <div *ngIf="!instruction.value.isEditing || !editable">
-        <div class="flex p-1 gap-2">
+        <div class="flex px-3 py-2 gap-2 bg-light-gray">
           <p class="">{{ instruction.value.step }}</p>
         </div>
 
-        <div class="editing-options-viewmode flex p-1 gap-2">
-          <button type="button" (click)="editInstruction(i)">edit</button>
-          <button type="button" (click)="removeInstruction(i)">remove</button>
+        <div class="editing-options-viewmode flex gap-2">
+          <button 
+            class="bg-light-blue px-2 py-1"
+            type="button" 
+            (click)="editInstruction(i)"
+          >edit</button>
+          <button  
+            type="button" 
+            (click)="removeInstruction(i)"
+          >remove</button>
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
-<form [formGroup]="ingredientsForm">
+<form [formGroup]="ingredientsForm" class="mb-2">
   <!-- <form [formGroup]="ingredientsForm" (ngSubmit)="onSubmit()"> -->
   <div formArrayName="ingredients" class="">
     <div
       *ngFor="let ingredient of ingredients.controls; let i = index"
       [formGroupName]="i"
-      class="ingredient-row outline-1"
+      class="ingredient-row"
     >
       <div *ngIf="ingredient.value.isEditing && editable" class="flex flex-col space-y-2">
         <div class="flex w-full gap-2 items-center">
@@ -35,21 +35,35 @@
         </div>
 
         <div class="editing-options-editmode flex shrink-0 gap-1">
-          <button type="button" (click)="saveIngredient(i)" class="bg-accent-dark">&check;</button>
-          <button type="button" (click)="removeIngredient(i)">&#10006;</button>
+          <button 
+            class="bg-accent-dark"
+            type="button" 
+            (click)="saveIngredient(i)"
+          >&check;</button>
+          <button 
+            type="button" 
+            (click)="removeIngredient(i)"
+          >&#10006;</button>
         </div>
       </div>
       <div *ngIf="!ingredient.value.isEditing || !editable">
-        <div class="flex p-1 gap-2">
+        <div class="flex px-3 py-2 gap-2 bg-light-gray">
           <p>
             {{ ingredient.value.quantity }}
             {{ ingredient.value.unit }}
             {{ ingredient.value.name }}
           </p>
         </div>
-        <div class="editing-options-viewmode flex p-1 gap-2">
-          <button type="button" (click)="editIngredient(i)">edit</button>
-          <button type="button" (click)="removeIngredient(i)">remove</button>
+        <div class="editing-options-viewmode flex gap-2">
+          <button 
+            class="bg-light-blue px-2 py-1"
+            type="button" 
+            (click)="editIngredient(i)"
+          >edit</button>
+          <button 
+            type="button" 
+            (click)="removeIngredient(i)"
+          >remove</button>
         </div>
       </div>
     </div>

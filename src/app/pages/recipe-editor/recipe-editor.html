@@ -9,7 +9,7 @@
             [(ngModel)]="title"
             [readonly]="!editable"
             placeholder="Title"
-            class="outline-1 px-3 py-2 w-full mb-2"
+            class="px-3 py-2 w-full mb-2 bg-light-blue"
         />
          <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
         <div class="editing-options-editmode">
@@ -18,9 +18,13 @@
     </div>
 
     <ng-template #viewMode>
-        <div class="editing-options-viewmode">
-            <h2>{{ title || 'Untitled Recipe' }}</h2>
-            <button type="button" (click)="editTitle()">edit</button>
+        <div class="mb-2">
+            <div class="bg-light-gray px-3 py-2">
+                <h2>{{ title || 'Untitled Recipe' }}</h2>
+            </div>
+            <div class="editing-options-viewmode">
+                <button class="bg-light-blue px-2 py-1" type="button" (click)="editTitle()">edit</button>
+            </div>
         </div>
     </ng-template>
 
