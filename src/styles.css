@@ -20,6 +20,14 @@
   background-color: var(--testpink);
 }
 
+@utility bg-accent {
+  background-color: var(--accent);
+}
+
+@utility bg-accent-dark {
+  background-color: var(--accent-dark);
+}
+
 @theme {
   --font-heading: "Spectral", serif;
   --font-body: "Work Sans", sans-serif;
