@@ -13,29 +13,30 @@
 }
 
 @utility bg-white {
-  background-color: var(--bg);
+  background-color: var(--bg-white);
 }
 
-@utility bg-testpink {
-  background-color: var(--testpink);
+@utility bg-light-blue {
+  background-color: var(--bg-light-blue);
+}
+
+@utility bg-light-gray {
+  background-color: var(--bg-light-gray);
 }
 
 @utility bg-accent {
   background-color: var(--accent);
 }
 
-@utility bg-accent-dark {
-  background-color: var(--accent-dark);
-}
-
 @theme {
   --font-heading: "Spectral", serif;
   --font-body: "Work Sans", sans-serif;
 
-  --bg: #ffffff;
+  --bg-white: #ffffff;
+  --bg-light-blue: #eef7ff;
+  --bg-light-gray: #f2f2f2;
   --text: #333;
   --accent: #d44930;
-  --accent-dark: #a53e12;
   --border-radius: 8px;
   --spacing: 0.75rem;
 
