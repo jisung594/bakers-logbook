@@ -36,7 +36,7 @@
 
         <div class="editing-options-editmode flex shrink-0 gap-2">
           <button 
-            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-accent-light"
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-med-blue"
             type="button" 
             (click)="saveIngredient(i)"
           >&check;</button>
@@ -70,5 +70,9 @@
       </div>
     </div>
   </div>
-  <button type="button" (click)="addIngredient()">Item +</button>
+  <button 
+    class="font-body font-medium text-sm px-2 py-0.5 rounded-sm outline-1"
+    type="button" 
+    (click)="addIngredient()"
+  >Item +</button>
 </form>

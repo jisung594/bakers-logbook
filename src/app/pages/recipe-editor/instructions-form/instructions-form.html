@@ -18,7 +18,7 @@
 
         <div class="editing-options-editmode flex shrink-0 gap-1">
           <button
-            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-accent-light"
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-med-blue"
             type="button" 
             (click)="saveInstruction(i)"
           >&check;</button>
@@ -49,5 +49,9 @@
       </div>
     </div>
   </div>
-  <button type="button" class="" (click)="addInstruction()">Step +</button>
+  <button
+    class="font-body font-medium text-sm px-2 py-0.5 rounded-sm outline-1"
+    type="button" 
+    (click)="addInstruction()"
+  >Step +</button>
 </form>

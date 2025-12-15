@@ -24,6 +24,10 @@
   background-color: var(--bg-light-gray);
 }
 
+@utility bg-med-blue {
+  background-color: var(--bg-med-blue);
+}
+
 @utility text-light {
   color: var(--text-light);
 }
@@ -46,6 +50,7 @@
 
   --bg-white: #ffffff;
   --bg-light-blue: #eef7ff;
+  --bg-med-blue: #a2d3ff;
   --bg-light-gray: #f2f2f2;
   --text-light: #fff;
   --text-dark: #333;
