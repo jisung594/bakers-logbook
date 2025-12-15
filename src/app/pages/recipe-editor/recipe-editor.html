@@ -19,8 +19,8 @@
 
     <ng-template #viewMode>
         <div class="mb-2">
-            <div class="bg-light-gray px-3 py-2">
-                <h2>{{ title || 'Untitled Recipe' }}</h2>
+            <div class="bg-light-gray px-3 py-2 mb-1">
+                <h2 class="text-2xl">{{ title || 'Untitled Recipe' }}</h2>
             </div>
             <div class="editing-options-viewmode">
                 <button class="bg-light-blue px-2 py-1" type="button" (click)="editTitle()">edit</button>
@@ -49,5 +49,5 @@
         type="button" 
         class="bg-accent p-1"
         (click)="saveRecipe()"
-    >Save Recipe</button>
+    >Save</button>
 </div>
