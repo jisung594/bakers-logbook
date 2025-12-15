@@ -1,39 +1,47 @@
 <form [formGroup]="instructionsForm" class="mb-2">
   <!-- <form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()"></form> -->
-  <div formArrayName="instructions" class="">
+  <div formArrayName="instructions" class="mb-1">
     <div
       *ngFor="let instruction of instructions.controls; let i = index"
       [formGroupName]="i"
       class="instruction-row"
     >
       <div *ngIf="instruction.value.isEditing && editable" class="flex flex-col space-y-2">
-        <div class="flex w-full gap-2 items-center">
+        <div class="flex w-full px-2 py-2 gap-2 mb-1 items-center bg-light-blue">
           <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
           <textarea
             formControlName="step"
             placeholder="Step {{ i + 1 }}:"
-            class="instruction-input outline-1 grow py-2 px-3"
+            class="instruction-input flex grow gap-2 rounded-sm"
           ></textarea>
         </div>
 
         <div class="editing-options-editmode flex shrink-0 gap-1">
-          <button type="button" (click)="saveInstruction(i)" class="bg-accent-dark">&check;</button>
-          <button type="button" (click)="removeInstruction(i)">&#10006;</button>
+          <button
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-accent-light"
+            type="button" 
+            (click)="saveInstruction(i)"
+          >&check;</button>
+          <button 
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm"
+            type="button" 
+            (click)="removeInstruction(i)">remove</button>
         </div>
       </div>
 
       <div *ngIf="!instruction.value.isEditing || !editable">
-        <div class="flex px-3 py-2 gap-2 mb-1 bg-light-gray">
-          <p class="">{{ instruction.value.step }}</p>
+        <div class="flex px-2 py-2 gap-2 mb-1 rounded-sm bg-light-gray">
+          <p class="font-body">{{ instruction.value.step }}</p>
         </div>
 
         <div class="editing-options-viewmode flex gap-2 mb-1">
           <button 
-            class="bg-light-blue px-2 py-1"
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-light-blue"
             type="button" 
             (click)="editInstruction(i)"
           >edit</button>
           <button  
+            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm"
             type="button" 
             (click)="removeInstruction(i)"
           >remove</button>
@@ -41,5 +49,5 @@
       </div>
     </div>
   </div>
-  <button type="button" class="" (click)="addInstruction()">Add Step +</button>
+  <button type="button" class="" (click)="addInstruction()">Step +</button>
 </form>

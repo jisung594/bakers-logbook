@@ -1,29 +1,41 @@
 <div class="recipe-editor">
     <div 
         *ngIf="isEditingTitle; else viewMode"
-        class="flex"
+        class="mb-2"
     >
-        <input 
-            type="text" 
-            id="recipe-title"
-            [(ngModel)]="title"
-            [readonly]="!editable"
-            placeholder="Title"
-            class="px-3 py-2 w-full mb-2 bg-light-blue"
-        />
+        <div>
+            <input 
+                type="text" 
+                id="recipe-title"
+                [(ngModel)]="title"
+                [readonly]="!editable"
+                placeholder="Title"
+                class="font-heading text-2xl px-2 py-1 w-full mb-1 bg-light-blue rounded-sm"
+            />
+        </div>
          <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
         <div class="editing-options-editmode">
-            <button type="button" (click)="saveTitle()">Save</button>
+            <button 
+                class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-accent-light" 
+                type="button" 
+                (click)="saveTitle()"
+            >save</button>
         </div>
     </div>
 
     <ng-template #viewMode>
         <div class="mb-2">
-            <div class="bg-light-gray px-3 py-2 mb-1">
-                <h2 class="text-2xl">{{ title || 'Untitled Recipe' }}</h2>
+            <div class="mb-1 bg-light-gray rounded-sm">
+                <h2 class="font-heading text-2xl px-2 py-1 w-full">
+                    {{ title || 'Untitled Recipe' }}
+                </h2>
             </div>
             <div class="editing-options-viewmode">
-                <button class="bg-light-blue px-2 py-1" type="button" (click)="editTitle()">edit</button>
+                <button 
+                    class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-light-blue" 
+                    type="button" 
+                    (click)="editTitle()"
+                >edit</button>
             </div>
         </div>
     </ng-template>
@@ -47,7 +59,7 @@
     <!-- TODO: submit button for saving data to Firestore here  -->
     <button 
         type="button" 
-        class="bg-accent p-1"
+        class="font-body font-semibold text-light text-sm tracking-widest px-1 py-1 rounded-sm bg-accent-dark"
         (click)="saveRecipe()"
-    >Save</button>
+    >SAVE</button>
 </div>

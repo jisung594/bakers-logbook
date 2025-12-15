@@ -1,23 +1,23 @@
 <form [formGroup]="ingredientsForm" class="mb-2">
   <!-- <form [formGroup]="ingredientsForm" (ngSubmit)="onSubmit()"> -->
-  <div formArrayName="ingredients" class="">
+  <div formArrayName="ingredients" class="mb-1">
     <div
       *ngFor="let ingredient of ingredients.controls; let i = index"
       [formGroupName]="i"
       class="ingredient-row"
     >
       <div *ngIf="ingredient.value.isEditing && editable" class="flex flex-col space-y-2">
-        <div class="flex w-full gap-2 items-center">
+        <div class="flex w-full gap-2 items-center px-2 py-2 mb-1 bg-light-blue">
           <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
           <input
             type="text"
             formControlName="quantity"
             placeholder="Quantity (e.g. 1 1/2)"
-            class="ingredient-input outline-1 flex-none w-16 py-2 px-3"
+            class="ingredient-input flex-none w-16 bg-white"
           />
           <select
             formControlName="unit"
-            class="ingredient-input outline-1 flex-none w-20 py-2 px-3 appearance-none"
+            class="ingredient-input flex-none w-20 appearance-none bg-white"
           >
             <option value="">-- Unit --</option>
             <option value="cup">cup</option>
@@ -30,37 +30,39 @@
             type="text"
             formControlName="name"
             placeholder="Ingredient name"
-            class="ingredient-input outline-1 grow py-2 px-3"
+            class="ingredient-input grow bg-white"
           />
         </div>
 
-        <div class="editing-options-editmode flex shrink-0 gap-1">
+        <div class="editing-options-editmode flex shrink-0 gap-2">
           <button 
-            class="bg-accent-dark"
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-accent-light"
             type="button" 
             (click)="saveIngredient(i)"
           >&check;</button>
-          <button 
+          <button
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm"
             type="button" 
             (click)="removeIngredient(i)"
-          >&#10006;</button>
+          >remove</button>
         </div>
       </div>
       <div *ngIf="!ingredient.value.isEditing || !editable">
-        <div class="flex px-3 py-2 gap-2 mb-1 bg-light-gray">
-          <p>
+        <div class="flex px-2 py-2 gap-2 mb-1 rounded-sm bg-light-gray">
+          <p class="font-body">
             {{ ingredient.value.quantity }}
             {{ ingredient.value.unit }}
             {{ ingredient.value.name }}
           </p>
         </div>
-        <div class="editing-options-viewmode flex gap-2 mb-1">
+        <div class="editing-options-viewmode flex shrink-0 gap-2">
           <button 
-            class="px-2 py-1 bg-light-blue"
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-light-blue"
             type="button" 
             (click)="editIngredient(i)"
           >edit</button>
           <button 
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm"
             type="button" 
             (click)="removeIngredient(i)"
           >remove</button>
@@ -68,5 +70,5 @@
       </div>
     </div>
   </div>
-  <button type="button" (click)="addIngredient()">Add Ingredient</button>
+  <button type="button" (click)="addIngredient()">Item +</button>
 </form>
