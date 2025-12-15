@@ -4,7 +4,7 @@
     <div
       *ngFor="let ingredient of ingredients.controls; let i = index"
       [formGroupName]="i"
-      class="ingredient-row"
+      class="ingredient-row mb-1"
     >
       <div *ngIf="ingredient.value.isEditing && editable" class="flex flex-col space-y-2">
         <div class="flex w-full gap-2 items-center px-2 py-2 mb-1 bg-light-blue">
@@ -61,11 +61,6 @@
             type="button" 
             (click)="editIngredient(i)"
           >edit</button>
-          <button 
-            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm"
-            type="button" 
-            (click)="removeIngredient(i)"
-          >remove</button>
         </div>
       </div>
     </div>

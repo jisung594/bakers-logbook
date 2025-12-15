@@ -4,7 +4,7 @@
     <div
       *ngFor="let instruction of instructions.controls; let i = index"
       [formGroupName]="i"
-      class="instruction-row"
+      class="instruction-row mb-1"
     >
       <div *ngIf="instruction.value.isEditing && editable" class="flex flex-col space-y-2">
         <div class="flex w-full px-2 py-2 gap-2 mb-1 items-center bg-light-blue">
@@ -40,11 +40,6 @@
             type="button" 
             (click)="editInstruction(i)"
           >edit</button>
-          <button  
-            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm"
-            type="button" 
-            (click)="removeInstruction(i)"
-          >remove</button>
         </div>
       </div>
     </div>
