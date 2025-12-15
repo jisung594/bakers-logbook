@@ -24,8 +24,20 @@
   background-color: var(--bg-light-gray);
 }
 
-@utility bg-accent {
-  background-color: var(--accent);
+@utility text-light {
+  color: var(--text-light);
+}
+
+@utility text-dark {
+  color: var(--text-dark);
+}
+
+@utility bg-accent-light {
+  background-color: var(--accent-light);
+}
+
+@utility bg-accent-dark {
+  background-color: var(--accent-dark);
 }
 
 @theme {
@@ -35,8 +47,10 @@
   --bg-white: #ffffff;
   --bg-light-blue: #eef7ff;
   --bg-light-gray: #f2f2f2;
-  --text: #333;
-  --accent: #d44930;
+  --text-light: #fff;
+  --text-dark: #333;
+  --accent-light: #f6dad5;
+  --accent-dark: #d44930;
   --border-radius: 8px;
   --spacing: 0.75rem;
 
