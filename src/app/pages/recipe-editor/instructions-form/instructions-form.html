@@ -1,33 +1,52 @@
-<form [formGroup]="instructionsForm">
-<!-- <form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()"></form> -->
-    <div formArrayName="instructions">
-        <div
-            *ngFor="let instruction of instructions.controls; let i = index"
-            [formGroupName]="i"
-            class="instruction-row"
-        >
-            <div *ngIf="instruction.value.isEditing && editable">
-                <textarea
-                    formControlName="step"
-                    placeholder="Step {{ i + 1 }}:"
-                    class="instruction-input"
-                ></textarea>
-
-                <div class="editing-options-editmode">
-                    <button type="button" (click)="saveInstruction(i)">Save</button>
-                    <button type="button" (click)="removeInstruction(i)">×</button>
-                </div>
-            </div>
-
-            <div *ngIf="!instruction.value.isEditing || !editable">
-                <p>{{ instruction.value.step }}</p>
-
-                <div class="editing-options-viewmode">
-                    <button type="button" (click)="editInstruction(i)">edit</button>
-                    <button type="button" (click)="removeInstruction(i)">remove</button>
-                </div>
-            </div>
+<form [formGroup]="instructionsForm" class="mb-2">
+  <!-- <form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()"></form> -->
+  <div formArrayName="instructions" class="mb-1">
+    <div
+      *ngFor="let instruction of instructions.controls; let i = index"
+      [formGroupName]="i"
+      class="instruction-row mb-1"
+    >
+      <div *ngIf="instruction.value.isEditing && editable" class="flex flex-col space-y-2">
+        <div class="flex w-full px-2 py-2 gap-2 mb-1 items-center bg-light-blue">
+          <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
+          <textarea
+            formControlName="step"
+            placeholder="Step {{ i + 1 }}:"
+            class="instruction-input flex grow gap-2 rounded-sm"
+          ></textarea>
         </div>
+
+        <div class="editing-options-editmode flex shrink-0 gap-1">
+          <button
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-med-blue"
+            type="button" 
+            (click)="saveInstruction(i)"
+          >&check;</button>
+          <button 
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm"
+            type="button" 
+            (click)="removeInstruction(i)">remove</button>
+        </div>
+      </div>
+
+      <div *ngIf="!instruction.value.isEditing || !editable">
+        <div class="flex px-2 py-2 gap-2 mb-1 rounded-sm bg-light-gray">
+          <p class="font-body">{{ instruction.value.step }}</p>
+        </div>
+
+        <div class="editing-options-viewmode flex gap-2 mb-1">
+          <button 
+            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-light-blue"
+            type="button" 
+            (click)="editInstruction(i)"
+          >edit</button>
+        </div>
+      </div>
     </div>
-    <button type="button" (click)="addInstruction()">Add Step +</button>
+  </div>
+  <button
+    class="font-body font-medium text-sm px-2 py-0.5 rounded-sm outline-1"
+    type="button" 
+    (click)="addInstruction()"
+  >Step +</button>
 </form>

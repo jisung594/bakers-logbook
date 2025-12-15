@@ -1,7 +1,16 @@
-<h3>my recipes</h3>
+<div>
+  <h3 class="font-heading text-4xl">my recipes</h3>
 
-<div *ngIf="recipes$ | async as recipes">
-    <a [routerLink]="['/recipes', r.id]" *ngFor="let r of recipes">
+  <div 
+    *ngIf="recipes$ | async as recipes"
+    class="flex flex-col justify-between h-12 bg-testpink"
+  >
+      <a 
+        [routerLink]="['/recipes', r.id]" 
+        *ngFor="let r of recipes"
+        class="block font-body"
+      >
         {{ r.title }}
-    </a>
+      </a>
+  </div>
 </div>

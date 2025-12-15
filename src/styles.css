@@ -1,11 +1,64 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Global font base. */
-body {
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+@font-face {
+  font-family: "Spectral";
+  src: url("/assets/fonts/Spectral-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 
+@font-face {
+  font-family: "Work Sans";
+  src: url("/assets/fonts/WorkSans-Regular.ttf") format("truetype");
+}
 
-/* You can add global styles to this file, and also import other style files */
+@utility bg-white {
+  background-color: var(--bg-white);
+}
+
+@utility bg-light-blue {
+  background-color: var(--bg-light-blue);
+}
+
+@utility bg-light-gray {
+  background-color: var(--bg-light-gray);
+}
+
+@utility bg-med-blue {
+  background-color: var(--bg-med-blue);
+}
+
+@utility text-light {
+  color: var(--text-light);
+}
+
+@utility text-dark {
+  color: var(--text-dark);
+}
+
+@utility bg-accent-light {
+  background-color: var(--accent-light);
+}
+
+@utility bg-accent-dark {
+  background-color: var(--accent-dark);
+}
+
+@theme {
+  --font-heading: "Spectral", serif;
+  --font-body: "Work Sans", sans-serif;
+
+  --bg-white: #ffffff;
+  --bg-light-blue: #eef7ff;
+  --bg-med-blue: #a2d3ff;
+  --bg-light-gray: #f2f2f2;
+  --text-light: #fff;
+  --text-dark: #333;
+  --accent-light: #f6dad5;
+  --accent-dark: #d44930;
+  --border-radius: 8px;
+  --spacing: 0.75rem;
+
+
+  --testpink: #ff00ff;
+}
