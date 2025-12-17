@@ -1,6 +1,7 @@
 <div *ngIf="!recipe">Loading recipe...</div>
 <app-recipe-editor
     *ngIf="recipe"
+    [recipeId]="recipeId"
     [title]="recipe.title"
     [ingredients]="ingredientsRows"
     [instructions]="instructionsRows"
