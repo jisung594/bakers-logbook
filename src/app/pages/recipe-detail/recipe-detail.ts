@@ -45,8 +45,8 @@ export class RecipeDetail {
     this.authSub = this.authService.authState$.subscribe(async user => {
       if (!user) return;
 
-      const id = this.route.snapshot.paramMap.get('id')!; // asserts that id exists
-      const snapshot = await this.recipeRepo.getRecipeById(user.uid, id);
+      this.recipeId = this.route.snapshot.paramMap.get('id')!;
+      const snapshot = await this.recipeRepo.getRecipeById(user.uid, this.recipeId);
 
       if (snapshot.exists()) {
         this.recipe = snapshot.data();
