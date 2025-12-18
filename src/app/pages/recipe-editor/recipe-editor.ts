@@ -90,7 +90,7 @@ export class RecipeEditor {
     }
 
     try {
-      // Updates firestore doc directly if existing recipe
+      // Updates firestore doc directly if recipe exists
       if (this.recipeId) {
         await this.recipeRepo.updateRecipe(
           user.uid, 

@@ -33,14 +33,6 @@ export class RecipeDetail {
   ) {}
 
   async ngOnInit() {
-
-    // =============================================================
-    // NOTE: removed, as this could miss updates or return null on refresh
-    // const user = await this.authService.getCurrentUser();
-    // if (!user) console.warn("No user logged in.");
-    // if (!user) return;
-    // =============================================================
-
     // Subscribes to auth state to get current user / data for given recipe id
     this.authSub = this.authService.authState$.subscribe(async user => {
       if (!user) return;

@@ -1,9 +1,10 @@
 <div *ngIf="!recipe">Loading recipe...</div>
 <app-recipe-editor
-    *ngIf="recipe"
-    [recipeId]="recipeId"
-    [title]="recipe.title"
-    [ingredients]="ingredientsRows"
-    [instructions]="instructionsRows"
-    [editable]="!editable">
+  *ngIf="recipe"
+  [recipeId]="recipeId"
+  [title]="recipe.title"
+  [ingredients]="ingredientsRows"
+  [instructions]="instructionsRows"
+  [editable]="!editable"
+>
 </app-recipe-editor>
