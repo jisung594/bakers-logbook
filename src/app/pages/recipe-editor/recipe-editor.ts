@@ -27,6 +27,7 @@ export class RecipeEditor {
   // to pass in initial ingredients/instructions data
 
   // Allows this component to be reused as form with CREATE, EDIT, and READ-ONLY modes
+  @Input() recipeId: string | null = null;
   @Input() title: string = '';
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
@@ -66,33 +67,34 @@ export class RecipeEditor {
   onInstructionsChange(rows: InstructionRow[]) {
     this.instructions = rows;
   }
-  
-  async loadRecipe(id: string) {
-    const user = await this.authService.getCurrentUser();
-    if (!user) return;
 
-    const docSnap = await this.recipeRepo.getRecipeById(user.uid, id);
-    if (docSnap.exists()) {
-      const recipe = docSnap.data();
+  // // NOTE: No longer used; recipe is loaded in RecipeDetail and passed via @Input()
+  // async loadRecipe(id: string) {
+  //   const user = await this.authService.getCurrentUser();
+  //   if (!user) return;
 
-      this.title = recipe.title;
-      this.ingredients = recipe.ingredients.map(i =>
-        this.fb.group({
-          name: this.fb.control(i.name, { nonNullable: true }),
-          quantity: this.fb.control(i.quantity, { nonNullable: true }),
-          unit: this.fb.control(i.unit, { nonNullable: true }),
-          isEditing: this.fb.control(false, { nonNullable: true }),
-        })
-      );
-      this.instructions = recipe.instructions.map(inst =>
-        this.fb.group({
-          step: this.fb.control(inst.step, { nonNullable: true }),
-          order: this.fb.control(inst.order, { nonNullable: true }),
-          isEditing: this.fb.control(false, { nonNullable: true }),
-        })
-      );
-    }
-  }
+  //   const docSnap = await this.recipeRepo.getRecipeById(user.uid, id);
+  //   if (docSnap.exists()) {
+  //     const recipe = docSnap.data();
+
+  //     this.title = recipe.title;
+  //     this.ingredients = recipe.ingredients.map(i =>
+  //       this.fb.group({
+  //         name: this.fb.control(i.name, { nonNullable: true }),
+  //         quantity: this.fb.control(i.quantity, { nonNullable: true }),
+  //         unit: this.fb.control(i.unit, { nonNullable: true }),
+  //         isEditing: this.fb.control(false, { nonNullable: true }),
+  //       })
+  //     );
+  //     this.instructions = recipe.instructions.map(inst =>
+  //       this.fb.group({
+  //         step: this.fb.control(inst.step, { nonNullable: true }),
+  //         order: this.fb.control(inst.order, { nonNullable: true }),
+  //         isEditing: this.fb.control(false, { nonNullable: true }),
+  //       })
+  //     );
+  //   }
+  // }
 
   async saveRecipe() {
     // Requires at least a valid recipe title upon submit
@@ -115,31 +117,36 @@ export class RecipeEditor {
 
     try {
       // Updates firestore doc directly if existing recipe
-      if (this.currentRecipeId) {
+      if (this.recipeId) {
+      // if (this.currentRecipeId) {
         await this.recipeRepo.updateRecipe(
           user.uid, 
-          this.currentRecipeId, 
+          this.recipeId,
+          // this.currentRecipeId, 
           recipeData
         );
         console.log('Recipe updated successfully.')
         return;
-      } 
-      
+      } else {
+
       // Checks if recipe already exists by title
       // Note: ! asserts that title is non-null, since it's checked above (ie. if (!this.title?.value))
-      const existingRecipeDoc = await this.recipeRepo.getRecipeByTitle(user.uid, recipeData.title!);
+      // const existingRecipeSnapshot = await this.recipeRepo.getRecipeByTitle(user.uid, recipeData.title!);
 
       // (if it does) Sets current id to that of found doc in firestore
-      if (!existingRecipeDoc.empty) {
-        this.currentRecipeId = existingRecipeDoc.docs[0].id;
+      // if (existingRecipeSnapshot.docs.length > 0) {
+      //   const firstMatchingDoc = existingRecipeSnapshot.docs[0];
+      //   this.currentRecipeId = firstMatchingDoc.id;
         
-        await this.recipeRepo.updateRecipe(
-          user.uid,
-          this.currentRecipeId, 
-          recipeData
-        );
-        console.log('Existing recipe updated successfully.');
-      } else {
+      //   await this.recipeRepo.updateRecipe(
+      //     user.uid,
+      //     this.currentRecipeId, 
+      //     recipeData
+      //   );
+      //   console.log('Existing recipe updated successfully.');
+      // } 
+      // else {
+        // Creates new recipe if none exists
         const newDocRef = await this.recipeRepo.addRecipe(user.uid, {
           ...recipeData,
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
