@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
 import { AuthService } from '../../services/auth.service';
@@ -41,7 +42,8 @@ export class RecipeEditor {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private recipeRepo: RecipeFirestoreService
+    private recipeRepo: RecipeFirestoreService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -108,6 +110,7 @@ export class RecipeEditor {
         });
 
         this.currentRecipeId = newDocRef.id;
+        this.router.navigate(['/recipes', this.currentRecipeId]);
         console.log('Recipe created successfully.');
       }
     } catch (err) {
