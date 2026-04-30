@@ -29,6 +29,10 @@
   background-color: var(--med-blue);
 }
 
+html {
+  --user-accent: var(--cta-blue);
+}
+
 @theme {
   --font-heading: 'Barlow Condensed', sans-serif;
   --font-body: 'Work Sans', sans-serif;
@@ -210,7 +214,7 @@ a:hover,
 .remove-button:active,
 .add-item-button:hover,
 .add-item-button:active {
-  color: var(--cta-blue);
+  color: var(--user-accent);
 }
 
 input:hover,

@@ -1,4 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { App } from './app/app';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -13,5 +14,6 @@ bootstrapApplication(App, {
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideRouter(routes),
+    provideAnimationsAsync(),
   ],
 });
