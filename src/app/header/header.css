@@ -33,5 +33,5 @@
 }
 
 .menu-options a:hover {
-  color: var(--cta-blue);
+  color: var(--user-accent);
 }

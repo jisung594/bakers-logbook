@@ -12,7 +12,7 @@
     >
       <mat-icon aria-label="hamburger-menu">menu</mat-icon>
     </button>
-    <nav class="hidden lg:flex lg:gap-6">
+    <nav class="hidden lg:flex lg:gap-6 lg:items-center">
       <div
         *ngIf="user$ | async"
         class="menu-options font-heading font-bold text-xl flex items-center justify-between gap-4"
@@ -21,6 +21,21 @@
         <a routerLink="recipes/new">new recipe</a>
         <a routerLink="/recipes">recipes</a>
       </div>
+      <button
+        *ngIf="user$ | async"
+        type="button"
+        mat-icon-button
+        class="theme-palette-trigger"
+        aria-label="Choose theme color"
+        [matTooltip]="
+          (isDemo$ | async)
+            ? 'Preview theme colors in demo mode. Sign in with your own account to save.'
+            : 'Theme color'
+        "
+        (click)="openThemePalette()"
+      >
+        <mat-icon>palette</mat-icon>
+      </button>
       <app-account-menu></app-account-menu>
     </nav>
   </div>
@@ -63,6 +78,19 @@
         <a routerLink="/" (click)="toggleMenu()">home</a>
         <a routerLink="recipes/new" (click)="toggleMenu()">new recipe</a>
         <a routerLink="/recipes" (click)="toggleMenu()">recipes</a>
+        <button
+          type="button"
+          class="flex items-center gap-2 text-left theme-palette-trigger-mobile"
+          [matTooltip]="
+            (isDemo$ | async)
+              ? 'Preview theme colors in demo mode. Sign in with your own account to save.'
+              : 'Theme color'
+          "
+          (click)="openThemePalette(); toggleMenu()"
+        >
+          <mat-icon class="icon-sm shrink-0">palette</mat-icon>
+          <span>theme</span>
+        </button>
       </div>
       <app-account-menu (requestClose)="toggleMenu()"></app-account-menu>
     </nav>
