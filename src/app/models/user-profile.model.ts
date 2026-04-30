@@ -6,4 +6,6 @@ export interface UserProfile {
   lastName: string;
   displayName: string;
   createdAt: Timestamp;
+  /** Accent color (hex) for UI; optional for legacy profiles. */
+  themeColor?: string;
 }
