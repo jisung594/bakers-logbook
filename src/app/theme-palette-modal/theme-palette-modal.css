@@ -1,0 +1,37 @@
+.theme-palette-content {
+  padding-top: 0.25rem;
+}
+
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.swatch {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--border-radius, 2px);
+  border: 2px solid var(--light-gray, #d9d9d9);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.swatch:hover,
+.swatch:focus-visible {
+  transform: scale(1.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+.swatch--current {
+  border-color: var(--dark-gray, #767676);
+  box-shadow: 0 0 0 2px var(--user-accent, var(--cta-blue, #3069d4));
+}
+
+.theme-palette-actions {
+  padding-top: 0;
+}
