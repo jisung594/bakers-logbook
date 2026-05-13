@@ -29,9 +29,7 @@ export class UIFacadeService {
     map((status: UIStatus) => status.status === 'idle')
   );
 
-  constructor(
-    private toastService: ToastService,
-  ) {}
+  constructor(private toastService: ToastService) {}
 
   /**
    * Show success notification
