@@ -35,3 +35,9 @@
 .menu-options a:hover {
   color: var(--user-accent);
 }
+
+@media (min-width: 1024px) {
+  .menu-button {
+    display: none !important;
+  }
+}
