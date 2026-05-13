@@ -286,3 +286,18 @@ textarea:focus {
 /* .animate-fade-in {
   animation: fadeIn 0.5s ease-out;
 } */
+
+
+.mat-mdc-dialog-title {
+  font-family: var(--font-heading) !important;
+  font-size: 1.8rem !important;
+  padding: 0 !important;
+}
+
+.mat-mdc-dialog-surface {
+  border-radius: 4px !important;
+}
+
+.mat-mdc-dialog-container-with-actions .mat-mdc-dialog-content {
+  padding: 0 !important;
+}

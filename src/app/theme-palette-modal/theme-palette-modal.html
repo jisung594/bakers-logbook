@@ -1,40 +1,43 @@
-<h2 mat-dialog-title class="font-heading text-xl font-semibold">Theme color</h2>
+<div class="flex flex-col gap-1 px-3 py-2 border-0">
+  <h2 mat-dialog-title>THEME COLOR</h2>
 
-<mat-dialog-content class="theme-palette-content">
-  <p class="text-sm text-[var(--mat-sys-on-surface-variant)] mb-3">
-    Choose an accent color. Click a swatch to preview; save to persist it.
-  </p>
+  <div class="flex flex-col gap-2">
+    <mat-dialog-content class="theme-palette-content">
+      <p class="font-body text-sm">
+        Choose an accent color. Click a swatch to preview; save to persist it.
+      </p>
 
-  <div class="swatch-grid" role="listbox" aria-label="Theme color presets">
-    @for (hex of swatches; track hex) {
-      <button
-        type="button"
-        class="swatch"
-        [class.swatch--current]="theme.previewColor() === hex"
-        [style.background]="hex"
-        [attr.aria-label]="'Color ' + hex"
-        [attr.aria-selected]="theme.previewColor() === hex"
-        (click)="onSwatchClick(hex)"
-      ></button>
-    }
+      <div class="swatch-grid" role="listbox" aria-label="Theme color presets">
+        @for (hex of swatches; track hex) {
+          <button
+            type="button"
+            class="swatch"
+            [class.swatch--current]="theme.previewColor() === hex"
+            [style.background]="hex"
+            [attr.aria-label]="'Color ' + hex"
+            [attr.aria-selected]="theme.previewColor() === hex"
+            (click)="onSwatchClick(hex)"
+          ></button>
+        }
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" class="theme-palette-actions">
+      <button 
+        type="button" 
+        class="px-2 py-1 rounded-sm bg-lightest-gray hover:bg-light-gray" 
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button 
+        type="button" 
+        class="px-2 py-1 bg-cta-blue text-white rounded-sm hover:opacity-90 disabled:opacity-50" 
+        [disabled]="isDemo() || !previewDiffersFromSaved()" 
+        (click)="saveAndClose(isDemo())"
+      >
+        Save
+      </button>
+    </mat-dialog-actions>
   </div>
-</mat-dialog-content>
-
-<mat-dialog-actions align="end" class="theme-palette-actions">
-  <button mat-button type="button" (click)="cancel()">Cancel</button>
-  <button
-    mat-flat-button
-    color="primary"
-    type="button"
-    [disabled]="isDemo() || !previewDiffersFromSaved()"
-    [matTooltip]="
-      isDemo()
-        ? 'Demo mode: theme changes are not saved. Sign in with your own account to save.'
-        : ''
-    "
-    [matTooltipDisabled]="!isDemo()"
-    (click)="saveAndClose(isDemo())"
-  >
-    Save
-  </button>
-</mat-dialog-actions>
+</div>

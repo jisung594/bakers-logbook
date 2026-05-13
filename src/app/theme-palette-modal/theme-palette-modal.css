@@ -1,5 +1,13 @@
 .theme-palette-content {
-  padding-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.theme-palette-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
 }
 
 .swatch-grid {
@@ -11,8 +19,7 @@
 .swatch {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: var(--border-radius, 2px);
-  border: 2px solid var(--light-gray, #d9d9d9);
+  border-radius: var(--border-radius);
   cursor: pointer;
   padding: 0;
   transition:
@@ -28,10 +35,6 @@
 }
 
 .swatch--current {
-  border-color: var(--dark-gray, #767676);
+  border: 2px solid var(--white);
   box-shadow: 0 0 0 2px var(--user-accent, var(--cta-blue, #3069d4));
-}
-
-.theme-palette-actions {
-  padding-top: 0;
 }
