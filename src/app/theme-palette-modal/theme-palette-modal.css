@@ -12,7 +12,7 @@
 
 .swatch-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
 }
 
@@ -35,6 +35,5 @@
 }
 
 .swatch--current {
-  border: 2px solid var(--white);
-  box-shadow: 0 0 0 2px var(--user-accent, var(--cta-blue, #3069d4));
+  border: 4px solid var(--white);
 }

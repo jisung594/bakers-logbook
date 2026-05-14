@@ -28,15 +28,15 @@
         class="px-2 py-1 rounded-sm bg-lightest-gray hover:bg-light-gray" 
         (click)="cancel()"
       >
-        Cancel
+        CANCEL
       </button>
       <button 
         type="button" 
-        class="px-2 py-1 bg-cta-blue text-white rounded-sm hover:opacity-90 disabled:opacity-50" 
+        class="px-2 py-1 bg-theme-color font-body text-white rounded-sm hover:opacity-90 disabled:opacity-50" 
         [disabled]="isDemo() || !previewDiffersFromSaved()" 
         (click)="saveAndClose(isDemo())"
       >
-        Save
+        SAVE
       </button>
     </mat-dialog-actions>
   </div>

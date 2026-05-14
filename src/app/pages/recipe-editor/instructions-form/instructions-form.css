@@ -1,5 +1,5 @@
 .instruction-row-view {
-  border-bottom: 1px solid var(--light-gray);
+  border-bottom: 1px solid var(--lightest-gray);
 }
 
 .instruction-row-view:last-child {

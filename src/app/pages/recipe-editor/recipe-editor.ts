@@ -285,17 +285,17 @@ export class RecipeEditor implements OnInit, OnDestroy {
       'success': 'bg-green-50 border border-green-200',
       'error': 'bg-red-50 border border-red-200',
       'confirm_discard': 'bg-orange/10 border border-orange/30',
-      'abort': 'bg-lightest-gray border border-light-gray'
+      'abort': 'bg-lightest-gray border border-light'
     };
     return classes[status as keyof typeof classes] || '';
   }
 
   getIconClasses(status: string): string {
     const classes = {
-      'loading_data': 'color-cta-blue',
+      'loading_data': 'color-theme',
       'editing': 'color-orange',
-      'syncing': 'color-cta-blue',
-      'success': 'color-cta-blue',
+      'syncing': 'color-theme',
+      'success': 'color-theme',
       'error': 'color-red',
       'confirm_discard': 'color-orange',
       'abort': 'color-dark-gray'
@@ -308,7 +308,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
       'loading_data': 'color-dark-gray',
       'editing': 'color-dark-gray',
       'syncing': 'color-dark-gray',
-      'success': 'color-cta-blue',
+      'success': 'color-theme',
       'error': 'color-red',
       'confirm_discard': 'color-dark-gray',
       'abort': 'color-dark-gray'

@@ -15,7 +15,7 @@
       
       <!-- Action Buttons for Confirm Discard -->
       <div *ngIf="status.status === 'confirm_discard'" class="flex gap-2">
-        <button (click)="recipeFacade.discardChanges()" type="button" class="px-3 py-1 text-sm bg-orange text-white rounded hover:bg-cta-blue">
+        <button (click)="recipeFacade.discardChanges()" type="button" class="px-3 py-1 text-sm bg-orange text-white rounded hover:bg-theme-color">
           Discard
         </button>
         <button (click)="recipeFacade.cancelDiscard()" type="button" class="px-3 py-1 text-sm bg-dark-gray text-white rounded hover:bg-med-blue">
@@ -285,7 +285,7 @@
         class="font-body font-semibold text-sm md:text-base tracking-widest px-2 py-0.5 bg-white border-2 border-orange shadow-md rounded-sm flex items-center gap-2"
         [ngClass]="{ 
           'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe || isSyncing,
-          'border-cta-blue bg-light-blue': isSyncing
+          'border-theme bg-light-blue': isSyncing
         }"
         (click)="!isDemoMode && !isDemoRecipe && !isSyncing && saveRecipe()"
         [disabled]="isDemoMode || isDemoRecipe || isSyncing"
@@ -293,7 +293,7 @@
         <!-- Syncing state -->
         <ng-container *ngIf="isSyncing">
           <span class="color-dark-gray">SAVING</span>
-          <mat-icon class="color-cta-blue animate-spin">sync</mat-icon>
+          <mat-icon class="color-theme animate-spin">sync</mat-icon>
         </ng-container>
         
         <!-- Normal state -->
