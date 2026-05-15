@@ -39,6 +39,16 @@ export class ThemeService {
 
   applyAccentToDocument(hex: string): void {
     document.documentElement.style.setProperty('--user-accent', hex);
+    document.documentElement.style.setProperty('--theme-color', hex);
+    const rgb = this.hexToRgb(hex);
+    document.documentElement.style.setProperty('--theme-color-rgb', rgb);
+  }
+
+  private hexToRgb(hex: string): string {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+      : '48, 105, 212';
   }
 
   setPreviewColor(hex: string): void {
