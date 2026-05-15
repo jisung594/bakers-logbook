@@ -23,9 +23,7 @@ export class Profile implements OnInit, OnDestroy {
   private currentUser?: User | null;
   private authSub?: Subscription;
 
-  constructor(
-    private authFacade: AuthFacadeService,
-  ) {
+  constructor(private authFacade: AuthFacadeService) {
     this.isDemo$ = this.authFacade.isDemoMode$;
   }
 
@@ -36,7 +34,6 @@ export class Profile implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Clean up auth subscription to prevent memory leak
     if (this.authSub) {
       this.authSub.unsubscribe();
     }
@@ -58,7 +55,6 @@ export class Profile implements OnInit, OnDestroy {
         await this.authFacade.updateProfile(this.currentUser.uid, this.editedProfileData);
         this.isEditingProfile = false;
       }
-      // Facade handles toast notification
     } catch (err) {
       console.error('Error updating profile:', err);
     }
