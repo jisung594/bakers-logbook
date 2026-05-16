@@ -4,8 +4,8 @@
 }
 
 .demo-button {
-  background-color: var(--theme-color);
-  border: 1px solid var(--theme-color);
+  background-color: var(--btn-primary-bg);
+  border: 1px solid var(--border-accent);
   transition: all 0.2s ease-in;
   width: 100%;
   padding: 0.5rem;
@@ -13,12 +13,12 @@
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 500;
-  color: white;
+  color: var(--btn-primary-fg);
   letter-spacing: 0.05em;
 }
 
 .demo-button:hover {
-  background-color: white;
-  color: var(--theme-color);
+  background-color: var(--btn-primary-fg);
+  color: var(--btn-primary-bg);
 }
 

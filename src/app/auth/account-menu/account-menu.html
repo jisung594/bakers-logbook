@@ -13,18 +13,18 @@
     <!-- Account icon -->
     <div 
       (click)="onAccountIconClick()"
-      class="flex items-center justify-center w-4 h-4 rounded-full bg-white hover:bg-light-gray transition-colors cursor-pointer"
+      class="flex items-center justify-center w-4 h-4 rounded-full hover:bg-light-gray transition-colors cursor-pointer"
     >
-      <mat-icon class="text-sm color-dark">account_circle</mat-icon>
+      <mat-icon class="text-sm color-theme">account_circle</mat-icon>
     </div>
     
     <!-- Dropdown menu -->
     <div
       *ngIf="isDropdownOpen"
-      class="absolute left-0 md:left-auto md:right-0 bottom-full flex flex-col gap-1 w-32 px-2 py-1 bg-white border border-dark rounded-sm shadow-lg z-50 lg:top-full lg:mt-2 lg:bottom-auto lg:mb-auto"
+      class="absolute left-0 md:left-auto md:right-0 bottom-full flex flex-col gap-1 w-32 px-2 py-1 bg-white rounded-sm shadow-lg z-50 lg:top-full lg:mt-2 lg:bottom-auto lg:mb-auto"
     >
       <!-- User info -->
-      <div *ngIf="userProfile$ | async as profile" class="px-1 py-2 border-b border-light">
+      <div *ngIf="userProfile$ | async as profile" class="px-1 py-2 border-b border-theme">
         <p class="font-heading font-semibold text-xl color-dark mb-1">
           Hello, {{ profile.displayName || profile.firstName || 'maker' }}.
         </p>
@@ -38,7 +38,7 @@
         <a
           routerLink="/profile"
           (click)="triggerCloseMenu()"
-          class="flex items-center gap-1 px-1 py-1 text-base font-heading font-normal transition-colors"
+          class="flex items-center gap-1 px-1 py-1 text-lg font-heading font-normal transition-colors"
         >
           <mat-icon class="text-sm">person</mat-icon>
           Edit Profile
@@ -46,7 +46,7 @@
         <div class="flex justify-end px-1 py-1">
           <button
             (click)="handleSignOut()"
-            class="signout-button font-body font-semibold text-sm color-dark tracking-wide px-2 py-0.5 border border-dark rounded-sm"
+            class="signout-button font-body font-semibold text-sm tracking-wide px-2 py-0.5 border border-theme rounded-sm"
           >
             SIGN OUT
           </button>
