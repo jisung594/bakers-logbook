@@ -8,7 +8,7 @@
       (keydown)="onSuggestionKeydown($event)"
       type="text"
       placeholder="Maple Dijon Roasted Chicken"
-      class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
+      class="search-bar w-full px-2 py-1 border border-theme rounded-sm font-body font-normal text-lg lg:text-xl"
     />
     
     <!-- Clear button -->
@@ -23,7 +23,7 @@
     <!-- Search Suggestions -->
     <div 
       *ngIf="showSearchSuggestions && searchSuggestions.length > 0" 
-      class="absolute top-full left-0 right-0 bg-white border border-light rounded-sm mt-1 shadow-md z-10">
+      class="absolute top-full left-0 right-0 bg-white border border-theme rounded-sm mt-1 shadow-md z-10">
       <div 
         *ngFor="let suggestion of searchSuggestions; let i = index" 
         class="suggestion-item px-2 py-1 hover:bg-gray-100 cursor-pointer font-body text-sm border-b border-light last:border-b-0"

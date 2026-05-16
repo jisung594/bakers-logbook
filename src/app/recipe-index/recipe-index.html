@@ -1,8 +1,8 @@
-<div class="recipe-index">
+<div class="recipe-index color-theme">
   <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide mb-4">RECIPES</h1>
   
   <!-- Search Section -->
-  <div class="search-section border-b-2 border-dotted border-light pb-4 mb-4">
+  <div class="search-section border-b-2 border-dotted border-theme pb-4 mb-4">
     <p class="font-heading font-normal text-lg lg:text-xl mb-1">Search your recipes:</p>
     
     <div class="relative">
@@ -12,7 +12,7 @@
         (keydown)="onSuggestionKeydown($event)"
         type="text"
         placeholder="Maple Dijon Roasted Chicken"
-        class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
+        class="search-bar w-full px-2 py-1 border border-theme rounded-sm font-body font-normal text-lg lg:text-xl"
       />
       
       <!-- Clear button -->
@@ -27,10 +27,10 @@
       <!-- Search Suggestions -->
       <div 
         *ngIf="showSearchSuggestions && searchSuggestions.length > 0" 
-        class="absolute top-full left-0 right-0 bg-white border border-light rounded-sm mt-1 shadow-md z-10">
+        class="absolute top-full left-0 right-0 bg-white border border-theme rounded-sm mt-1 shadow-md z-10">
         <div 
           *ngFor="let suggestion of searchSuggestions; let i = index" 
-          class="suggestion-item px-2 py-1 hover:bg-gray-100 cursor-pointer font-body text-sm border-b border-light last:border-b-0"
+          class="suggestion-item px-2 py-1 hover:bg-gray-100 cursor-pointer font-body text-sm border-b border-theme last:border-b-0"
           [class.bg-light-blue]="i === selectedSuggestionIndex"
           (click)="selectSuggestion(suggestion)">
           {{ suggestion }}
@@ -40,7 +40,7 @@
     
     <!-- Search hint -->
     <div class="mt-2">
-      <p class="font-body text-xs color-dark-gray">
+      <p class="font-body text-sm color-dark-gray">
         Search by title, ingredient, or instruction (e.g., "beef shank, thyme, braise")
       </p>
     </div>
@@ -58,7 +58,7 @@
   </div>
 
   <!-- Archived recipes section -->
-  <div class="archived-recipes flex flex-col rounded-sm px-2 py-1 border border-light">
+  <div class="archived-recipes flex flex-col rounded-sm px-2 py-1 border border-theme">
     <details closed class="group">
       <summary class="flex justify-between list-none font-body font-medium text-sm">
         archived

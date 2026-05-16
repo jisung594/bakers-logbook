@@ -13,9 +13,9 @@
         [class]="editable ? 'instruction-row-edit' : 'instruction-row-view'"
       >
         <!-- Edit mode -->
-        <div cdkDrag *ngIf="editable" class="flex flex-row gap-1">
+        <div cdkDrag *ngIf="editable" class="flex flex-row gap-1 border border-theme rounded-sm">
           <div
-            class="flex justify-between gap-2 w-full rounded-sm bg-theme-tint shadow-sm px-1 py-1"
+            class="flex justify-between gap-2 w-full rounded-sm bg-tint-light shadow-sm px-1 py-1"
           >
             <div class="w-full">
               <div class="editing-options-editmode flex flex-row justify-between mb-1">
@@ -42,16 +42,16 @@
 
               <!-- Instruction notes field -->
               <div class="flex flex-col w-full">
-                <div class="flex flex-col px-1 py-1 border border-dark rounded-sm">
+                <div class="flex flex-col px-1 py-1 border border-theme rounded-sm">
                   <details
                     closed
                     class="group"
                   >
                     <summary
-                      class="flex justify-between font-heading font-medium text-sm tracking-wider color-dark-gray px-0 list-none"
+                      class="flex justify-between font-heading font-medium text-sm tracking-wider px-0 list-none"
                     >
                       NOTES
-                      <span class="color-dark-gray transition-transform group-open:rotate-180"
+                      <span class="transition-transform group-open:rotate-180"
                         >&#9661;</span
                       >
                     </summary>
@@ -90,7 +90,7 @@
 
               <!-- Instruction notes field -->
               <div class="" *ngIf="instruction.value.notes && instruction.value.notes.length > 0">
-                <p class="font-body text-sm color-dark-gray whitespace-pre-line">
+                <p class="font-body text-sm whitespace-pre-line">
                   {{ instruction.value.notes }}
                 </p>
               </div>
@@ -98,7 +98,7 @@
 
             <ng-template #emptyInstruction>
               <div class="">
-                <p class="font-body text-base italic color-dark-gray">Instruction draft</p>
+                <p class="font-body text-base italic">Instruction draft</p>
               </div>
             </ng-template>
           </div>
@@ -109,14 +109,14 @@
     <!-- Display when recipe has no instructions -->
     <ng-template #emptyInstructions>
       <div class="empty-state text-center py-4">
-        <p class="font-body color-dark-gray italic">No instructions yet.</p>
+        <p class="font-body italic">No instructions yet.</p>
       </div>
     </ng-template>
   </div>
 
   <button
     *ngIf="editable"
-    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border border-dark"
+    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border border-theme"
     type="button"
     (click)="addInstruction()"
   >

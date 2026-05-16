@@ -1,4 +1,4 @@
 .recipe-item:hover,
 .recipe-item:active {
-    border-color: var(--theme-color);
+    border-color: var(--border-accent);
 }

@@ -13,8 +13,8 @@
         [class]="editable ? 'ingredient-row-edit' : 'ingredient-row-view'"
       >
         <!-- Edit mode -->
-        <div cdkDrag *ngIf="editable" class="flex flex-row gap-1">
-          <div class="flex flex-col w-full gap-1 rounded-sm bg-theme-tint shadow-sm px-1 py-1">
+        <div cdkDrag *ngIf="editable" class="flex flex-row gap-1 border border-theme rounded-sm">
+          <div class="flex flex-col w-full gap-1 bg-tint-light px-1 py-1">
             <div class="editing-options-editmode flex flex-row justify-between">
               <label
                 *ngIf="ingredient.value.name"
@@ -23,7 +23,7 @@
               >
               <label
                 *ngIf="!ingredient.value.name"
-                class="font-body font-normal text-base italic color-dark-gray"
+                class="font-body font-normal text-base italic"
                 >Ingredient Name</label
               >
               <button
@@ -34,17 +34,17 @@
                 &times;
               </button>
             </div>
-            <div class="flex flex-col gap-1 px-1 py-1 border border-dark rounded-sm">
+            <div class="flex flex-col gap-1 px-1 py-1 border border-theme rounded-sm">
               <!-- Closed by default, unless new ingredient is added -->
               <details
                 [attr.open]="i === newIngredientIndex ? true : null"
                 class="group"
               >
                 <summary
-                  class="flex justify-between font-heading font-medium text-sm tracking-wider color-dark-gray px-0 list-none"
+                  class="flex justify-between font-heading font-medium text-sm tracking-wider px-0 list-none"
                 >
                   DETAILS
-                  <span class="color-dark-gray transition-transform group-open:rotate-180"
+                  <span class="transition-transform group-open:rotate-180"
                     >&#9661;</span
                   >
                 </summary>
@@ -140,7 +140,7 @@
             </div>
             <ng-template #emptyIngredient>
               <div>
-                <p class="font-body text-base italic color-dark-gray">Ingredient draft</p>
+                <p class="font-body text-base italic">Ingredient draft</p>
               </div>
             </ng-template>
           </div>
@@ -150,13 +150,13 @@
 
     <!-- Display when recipe has no ingredients -->
     <div *ngIf="!ingredients || ingredients.length === 0" class="empty-state text-center py-4">
-      <p class="font-body color-dark-gray italic">No ingredients yet.</p>
+      <p class="font-body italic">No ingredients yet.</p>
     </div>
   </div>
 
   <button
     *ngIf="editable"
-    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border border-dark"
+    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border border-theme"
     type="button"
     (click)="addIngredient()"
   >
