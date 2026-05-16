@@ -5,16 +5,36 @@
   background-color: var(--theme-color);
 }
 
-@utility bg-theme-tint {
-  background-color: rgba(var(--theme-color-rgb), 0.1);
+@utility bg-btn-primary {
+  background-color: var(--btn-primary-bg);
+}
+
+@utility text-btn-primary {
+  color: var(--btn-primary-fg);
+}
+
+@utility bg-tint-light {
+  background-color: rgba(var(--theme-color-rgb), 0.05);
+}
+
+@utility bg-tint-dark {
+  background-color: rgba(var(--theme-color-rgb), 0.9);
 }
 
 @utility bg-orange {
   background-color: var(--orange);
 }
 
+@utility bg-cta-blue {
+  background-color: var(--cta-blue);
+}
+
 @utility bg-light-blue {
   background-color: var(--light-blue);
+}
+
+@utility bg-med-blue {
+  background-color: var(--med-blue);
 }
 
 @utility bg-light-gray {
@@ -29,12 +49,13 @@
   background-color: var(--dark-gray);
 }
 
-@utility bg-med-blue {
-  background-color: var(--med-blue);
-}
-
 html {
+  --text-accent: var(--text-accent);
+  --border-accent: var(--border-accent);
   --user-accent: var(--theme-color);
+  --btn-primary-bg: var(--theme-color);
+  --btn-primary-fg: #ffffff;
+  --page-background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.35), white);
 }
 
 @theme {
@@ -42,9 +63,14 @@ html {
   --font-body: 'Work Sans', sans-serif;
   --theme-color: #3069d4;
   --theme-color-rgb: 48, 105, 212;
+  --text-accent: #3069d4;
+  --border-accent: #3069d4;
+  --btn-primary-bg: #3069d4;
+  --btn-primary-fg: #ffffff;
   --orange: #ffa500;
   --red: #b22222;
   --white: #ffffff;
+  --cta-blue: #3069d4;
   --light-blue: #f4faff;
   --med-blue: #a2d3ff;
   --med-blue-rgb: 162, 211, 255;
@@ -57,7 +83,7 @@ html {
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.35), white);
+  background: var(--page-background);
   min-height: 100vh;
 }
 
@@ -70,7 +96,8 @@ body {
 }
 
 .color-theme {
-  color: var(--theme-color);
+  color: var(--text-accent);
+  /* color: var(--theme-color); */
 }
 
 .color-orange {
@@ -90,7 +117,7 @@ body {
 }
 
 .border-theme {
-  border-color: var(--theme-color);
+  border-color: var(--border-accent);
 }
 
 .border-orange {
@@ -107,7 +134,8 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-base);
   font-weight: 400;
-  background-color: rgb(255, 255, 255, 0.5);
+  background-color: var(--btn-primary-fg);
+  color: var(--btn-primary-bg); 
   border-radius: var(--radius-sm);
   padding-block: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 1);
@@ -245,7 +273,7 @@ textarea:focus {
 .signout-button:active,
 .menu-button:active,
 .close-button:active {
-  border-color: var(--orange);
+  border-color: var(--cta-blue);
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
