@@ -9,7 +9,6 @@ import { RecipeEditor } from '../recipe-editor/recipe-editor';
 import { IngredientRow } from '../recipe-editor/ingredients-form/ingredients-form.types';
 import { InstructionRow } from '../recipe-editor/instructions-form/instructions-form.types';
 import { Recipe } from '../../models/recipe.model';
-
 @Component({
   selector: 'app-recipe-detail',
   standalone: true,
@@ -42,8 +41,9 @@ export class RecipeDetail implements OnDestroy {
   async ngOnInit() {
     this.isDemoRecipe = this.route.snapshot.data['isDemo'] ?? false;
 
-    // Use hardcoded demo ID if on /demo route, otherwise read from URL
-    this.recipeId = this.isDemoRecipe ? this.demoRecipeId : this.route.snapshot.paramMap.get('id');
+    this.recipeId = this.isDemoRecipe
+      ? this.demoRecipeId
+      : this.route.snapshot.paramMap.get('id');
 
     if (this.isDemoRecipe) {
       // Skip auth and load public recipe directly

@@ -44,4 +44,5 @@ Thumbs.db
 
 # Ignore environment configs
 src/environments/environment*.ts
+src/app/config/preview-auth.config.ts
 .firebase/

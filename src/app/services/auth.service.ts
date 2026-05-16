@@ -16,6 +16,8 @@ import {
 import { UserProfile } from '../models/user-profile.model';
 import { Injectable } from '@angular/core';
 import { of, switchMap, Observable, BehaviorSubject } from 'rxjs';
+import { ACCOUNTS } from '../config/accounts.config';
+import { PREVIEW_AUTH } from '../config/preview-auth.config';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +25,7 @@ import { of, switchMap, Observable, BehaviorSubject } from 'rxjs';
 export class AuthService {
   authState$: Observable<User | null>;
   userProfile$: Observable<UserProfile | null>;
+  /** True when signed in via the DEMO button (preview account, read-only UI). */
   private isDemoMode$ = new BehaviorSubject<boolean>(
     localStorage.getItem('demoMode') === 'true',
   );
@@ -32,17 +35,14 @@ export class AuthService {
     private auth: Auth,
     private firestore: Firestore,
   ) {
-    // Initializes observable to make available immediately
-    this.authState$ = authState(this.auth); // built-in Firebase Observable (manages + reacts to changes in authentication state)
+    this.authState$ = authState(this.auth);
     this.userProfile$ = this.authState$.pipe(
       switchMap((user) => {
         if (!user) {
           return of(null);
         }
-        // Auto-detect demo user by email
-        if (user.email === 'demo@pinchthis.com') {
-          this.isDemoMode$.next(true);
-          localStorage.setItem('demoMode', 'true');
+        if (user.email === ACCOUNTS.devEmail) {
+          this.clearPreviewMode();
         }
         const userRef = doc(this.firestore, `users/${user.uid}`);
         return docData(userRef) as Observable<UserProfile>;
@@ -50,7 +50,7 @@ export class AuthService {
     );
   }
 
-  getCurrentUser() {
+  getCurrentUser(): User | null {
     return this.auth.currentUser;
   }
 
@@ -72,9 +72,8 @@ export class AuthService {
     displayName: string,
     email: string,
     password: string,
-  ) {
+  ): Promise<void> {
     try {
-      // Sets up user w/ Firebase auth
       const cred = await createUserWithEmailAndPassword(this.auth, email, password);
       const uid = cred.user.uid;
 
@@ -83,12 +82,12 @@ export class AuthService {
         firstName,
         lastName,
         displayName,
-        createdAt: serverTimestamp() as any,
+        createdAt: serverTimestamp() as UserProfile['createdAt'],
       };
 
-      // Stores profile data for appropriate user
       const userDocRef = doc(this.firestore, 'users', uid);
       await setDoc(userDocRef, userProfile);
+      this.clearPreviewMode();
     } catch (err) {
       console.error('Registration failed:', err);
       throw err;
@@ -98,6 +97,7 @@ export class AuthService {
   async signIn(email: string, password: string) {
     try {
       const result = await signInWithEmailAndPassword(this.auth, email, password);
+      this.clearPreviewMode();
       return result;
     } catch (err) {
       console.error('Sign-in failed:', err);
@@ -105,15 +105,18 @@ export class AuthService {
     }
   }
 
+  /** Signs into the public preview account and enables read-only demo UI. */
   async signInAsDemo() {
     try {
-      // Authenticate with Firebase first
-      const result = await signInWithEmailAndPassword(this.auth, 'demo@pinchthis.com', 'demo_pw');
-      this.isDemoMode$.next(true);
-      localStorage.setItem('demoMode', 'true');
+      const result = await signInWithEmailAndPassword(
+        this.auth,
+        ACCOUNTS.previewEmail,
+        PREVIEW_AUTH.password,
+      );
+      this.setPreviewMode();
       return result;
     } catch (err) {
-      console.error('Demo sign-in failed:', err);
+      console.error('Preview sign-in failed:', err);
       throw err;
     }
   }
@@ -122,7 +125,8 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
 
     try {
-      const result = await signInWithPopup(this.auth, provider); // built-in Firebase function for handling signin via Google's popup window
+      const result = await signInWithPopup(this.auth, provider);
+      this.clearPreviewMode();
       return result;
     } catch (err) {
       console.error('Google sign-in failed:', err);
@@ -131,18 +135,26 @@ export class AuthService {
   }
 
   signOut() {
-    this.isDemoMode$.next(false);
-    localStorage.removeItem('demoMode');
+    this.clearPreviewMode();
     return signOut(this.auth);
   }
 
   async resetPassword(email: string) {
     try {
-      const result = sendPasswordResetEmail(this.auth, email);
-      return result;
+      return sendPasswordResetEmail(this.auth, email);
     } catch (err) {
       console.error('Password reset failed:', err);
       throw err;
     }
+  }
+
+  private setPreviewMode(): void {
+    this.isDemoMode$.next(true);
+    localStorage.setItem('demoMode', 'true');
+  }
+
+  private clearPreviewMode(): void {
+    this.isDemoMode$.next(false);
+    localStorage.removeItem('demoMode');
   }
 }
