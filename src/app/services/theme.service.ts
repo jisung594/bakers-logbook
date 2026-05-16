@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { resolveThemeTokens } from '../shared/theme/theme-tokens';
 
 @Injectable({
   providedIn: 'root',
@@ -38,17 +39,23 @@ export class ThemeService {
   }
 
   applyAccentToDocument(hex: string): void {
-    document.documentElement.style.setProperty('--user-accent', hex);
-    document.documentElement.style.setProperty('--theme-color', hex);
-    const rgb = this.hexToRgb(hex);
-    document.documentElement.style.setProperty('--theme-color-rgb', rgb);
-  }
+    const tokens = resolveThemeTokens(hex);
+    const root = document.documentElement;
 
-  private hexToRgb(hex: string): string {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result
-      ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
-      : '48, 105, 212';
+    root.style.setProperty('--theme-color', tokens.themeColor);
+    root.style.setProperty('--theme-color-rgb', tokens.themeColorRgb);
+    root.style.setProperty('--text-accent', tokens.textAccent);
+    root.style.setProperty('--border-accent', tokens.borderAccent);
+    root.style.setProperty('--user-accent', tokens.userAccent);
+    root.style.setProperty('--btn-primary-bg', tokens.btnPrimaryBg);
+    root.style.setProperty('--btn-primary-fg', tokens.btnPrimaryFg);
+    root.style.setProperty('--page-background', tokens.pageBackground);
+
+    if (tokens.themeSurface === 'chromatic') {
+      root.removeAttribute('data-theme-surface');
+    } else {
+      root.setAttribute('data-theme-surface', tokens.themeSurface);
+    }
   }
 
   setPreviewColor(hex: string): void {
