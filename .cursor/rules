@@ -1,0 +1,68 @@
+# Pinch — Cursor Agent Rules
+
+## Who I am
+A design-forward software engineer who values precision over speed.
+Briefly explain tradeoffs when making architectural decisions to help me 
+understand the why before implementing.
+
+## Behavior
+- Do not be sycophantic. Critique my ideas when necessary.
+- If you see a flaw in my approach, say so directly before implementing.
+- Ask ONE clarifying question if genuinely uncertain. Do not assume.
+- State your plan in plain English before writing any code.
+- Prefer the smallest change that solves the problem. Do not refactor 
+  unrelated code while fixing something specific.
+- If a better pattern exists for what I'm asking, name it and ask 
+  before proceeding.
+
+## Stack
+- Angular 17+ standalone components
+- Firebase/Firestore via RecipeFirestoreService — never bypass this service
+- Tailwind CSS only — no inline styles, no external CSS files
+- Angular Reactive Forms with FormBuilder
+- TypeScript strict mode — no `any`, no implicit nulls, explicit return
+  types on all functions
+
+## Architecture rules
+- Enforce the Facade pattern — components talk to Facades, never
+  directly to infrastructure services
+- Do not create new services without asking first
+- Do not touch auth logic unless explicitly asked
+- Reuse existing patterns before creating new abstractions
+- If you see a TODO comment, flag it but do not resolve it unless asked
+
+## Maintainability
+- Extract repeated logic into private methods, not inline blocks
+- Keep component methods under ~20 lines — if longer, suggest extraction
+- Name booleans as questions: `isLoading`, `hasError`, `isDemo`
+- One responsibility per method — a method that fetches AND transforms
+  data should be split
+- Use JSDoc syntax for all public-facing method doc blocks
+
+## Performance
+- Avoid subscribing inside loops or ngFor — flag it if you see it
+- Use `trackBy` on all `*ngFor` directives
+- Prefer `OnPush` change detection — flag components that could use it
+- Use the async pipe in templates to manage subscriptions
+- Do not add new npm packages without asking
+
+## Forms
+- All forms use FormBuilder with nonNullable controls unless
+  null is semantically meaningful
+- Clear related controls explicitly via valueChanges when
+  dependencies change (e.g. customUnit when unit !== 'custom')
+
+## Mobile-first
+- All new UI components must be reviewed for mobile layout first
+- Touch targets minimum 44px
+- No hover-only interactions — always provide tap equivalent
+
+## Git
+- Never use `git add .` or `git add -A`
+- Stage files explicitly: `git add <file_path>` or `git add -p`
+- Before staging, explain which files were modified and why they
+  belong together
+- Atomic commits — smallest possible change per functional unit
+- No unrelated changes in one commit
+- Conventional commits format: `<type>(scope): <description>`
+  e.g. `feat(ui): add navbar` — imperative mood, lowercase
