@@ -280,11 +280,11 @@ export class RecipeEditor implements OnInit, OnDestroy {
   getStateClasses(status: string): string {
     const classes = {
       'loading_data': 'bg-light-blue border border-med-blue',
-      'editing': 'bg-orange/10 border border-orange/30',
+      'editing': 'bg-(--orange)/10 border border-orange/30',
       'syncing': 'bg-light-blue border border-med-blue',
       'success': 'bg-green-50 border border-green-200',
       'error': 'bg-red-50 border border-red-200',
-      'confirm_discard': 'bg-orange/10 border border-orange/30',
+      'confirm_discard': 'bg-(--orange)/10 border border-orange/30',
       'abort': 'bg-lightest-gray border border-light'
     };
     return classes[status as keyof typeof classes] || '';
@@ -293,11 +293,11 @@ export class RecipeEditor implements OnInit, OnDestroy {
   getIconClasses(status: string): string {
     const classes = {
       'loading_data': 'color-theme',
-      'editing': 'color-orange',
+      'editing': 'text-(--orange)',
       'syncing': 'color-theme',
       'success': 'color-theme',
-      'error': 'color-red',
-      'confirm_discard': 'color-orange',
+      'error': 'text-(--red)',
+      'confirm_discard': 'text-(--orange)',
       'abort': 'color-dark-gray'
     };
     return classes[status as keyof typeof classes] || '';
@@ -309,7 +309,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
       'editing': 'color-dark-gray',
       'syncing': 'color-dark-gray',
       'success': 'color-theme',
-      'error': 'color-red',
+      'error': 'text-(--red)',
       'confirm_discard': 'color-dark-gray',
       'abort': 'color-dark-gray'
     };

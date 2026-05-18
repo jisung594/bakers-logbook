@@ -15,7 +15,7 @@
       
       <!-- Action Buttons for Confirm Discard -->
       <div *ngIf="status.status === 'confirm_discard'" class="flex gap-2">
-        <button (click)="recipeFacade.discardChanges()" type="button" class="px-3 py-1 text-sm bg-orange text-white rounded hover:bg-btn-primary">
+        <button (click)="recipeFacade.discardChanges()" type="button" class="px-3 py-1 text-sm bg-(--orange) text-white rounded hover:bg-btn-primary">
           Discard
         </button>
         <button (click)="recipeFacade.cancelDiscard()" type="button" class="px-3 py-1 text-sm bg-dark-gray text-white rounded hover:bg-med-blue">
@@ -251,7 +251,7 @@
     >
       <button
         type="button"
-        class="font-body font-medium text-xs md:text-sm tracking-widest color-red px-1 py-0.5 bg-white shadow-md rounded-sm flex items-center gap-0.5"
+        class="font-body font-medium text-xs md:text-sm tracking-widest text-(--red) px-1 py-0.5 bg-white shadow-md rounded-sm flex items-center gap-0.5"
         [ngClass]="{ 'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe }"
         (click)="!isDemoMode && !isDemoRecipe && confirmDelete()"
         [disabled]="isDemoMode || isDemoRecipe"
@@ -282,7 +282,7 @@
     >
       <button
         type="button"
-        class="font-body font-medium text-sm md:text-base tracking-widest text-white bg-cta-blue px-2 py-0.5 shadow-md rounded-sm flex items-center gap-2"
+        class="font-body font-medium text-sm md:text-base tracking-widest text-white bg-(--cta-blue) px-2 py-0.5 shadow-md rounded-sm flex items-center gap-2"
         [ngClass]="{ 
           'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe || isSyncing,
           'border-theme bg-light-blue': isSyncing

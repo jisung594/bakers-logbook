@@ -1,54 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Gilda+Display:wght@400;500;600&family=Barlow+Condensed:wght@400;600&display=swap');
 @import 'tailwindcss';
 
-@utility bg-theme-color {
-  background-color: var(--theme-color);
-}
-
-@utility bg-btn-primary {
-  background-color: var(--btn-primary-bg);
-}
-
-@utility text-btn-primary {
-  color: var(--btn-primary-fg);
-}
-
-@utility bg-tint-light {
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-}
-
-@utility bg-tint-dark {
-  background-color: rgba(var(--theme-color-rgb), 0.9);
-}
-
-@utility bg-orange {
-  background-color: var(--orange);
-}
-
-@utility bg-cta-blue {
-  background-color: var(--cta-blue);
-}
-
-@utility bg-light-blue {
-  background-color: var(--light-blue);
-}
-
-@utility bg-med-blue {
-  background-color: var(--med-blue);
-}
-
-@utility bg-light-gray {
-  background-color: var(--light-gray);
-}
-
-@utility bg-lightest-gray {
-  background-color: var(--lightest-gray);
-}
-
-@utility bg-dark-gray {
-  background-color: var(--dark-gray);
-}
-
 html {
   --text-accent: var(--text-accent);
   --border-accent: var(--border-accent);
@@ -87,6 +39,38 @@ body {
   min-height: 100vh;
 }
 
+.bg-btn-primary {
+  background-color: var(--btn-primary-bg);
+}
+
+.text-btn-primary {
+  color: var(--btn-primary-fg);
+}
+
+.bg-tint-light {
+  background-color: rgba(var(--theme-color-rgb), 0.05);
+}
+
+.bg-tint-dark {
+  background-color: rgba(var(--theme-color-rgb), 0.9);
+}
+
+.bg-light-blue {
+  background-color: var(--light-blue);
+}
+
+.bg-med-blue {
+  background-color: var(--med-blue);
+}
+
+.bg-lightest-gray {
+  background-color: var(--lightest-gray);
+}
+
+.bg-dark-gray {
+  background-color: var(--dark-gray);
+}
+
 .color-light-gray {
   color: var(--light-gray);
 }
@@ -98,14 +82,6 @@ body {
 .color-theme {
   color: var(--text-accent);
   /* color: var(--theme-color); */
-}
-
-.color-orange {
-  color: var(--orange);
-}
-
-.color-red {
-  color: var(--red);
 }
 
 .border-light {

@@ -72,14 +72,14 @@
         <!-- Inline validation errors -->
         <div
           *ngIf="email!.invalid && email!.touched"
-          class="error font-body font-medium text-sm color-red"
+          class="error font-body font-medium text-sm text-(--red)"
         >
           Please enter a valid email address.
         </div>
 
         <div
           *ngIf="errorCode === 'auth/email-already-in-use'"
-          class="error font-body font-medium text-sm color-red"
+          class="error font-body font-medium text-sm text-(--red)"
         >
           Another account already uses this email. Please try another.
         </div>
@@ -103,7 +103,7 @@
         <!-- Inline validation error -->
         <div
           *ngIf="password!.invalid && password!.touched"
-          class="error font-body font-medium text-sm color-red"
+          class="error font-body font-medium text-sm text-(--red)"
         >
           <p class="mb-1">Please enter a valid password with:</p>
           <ul class="font-normal list-inside list-disc">
