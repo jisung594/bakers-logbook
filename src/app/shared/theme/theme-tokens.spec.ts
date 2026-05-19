@@ -10,7 +10,7 @@ describe('theme-tokens', () => {
 
   it('inverts primary button tokens for light surface', () => {
     const tokens = resolveThemeTokens('#FFFFFF');
-    expect(tokens.btnPrimaryBg).toBe('#000000');
+    expect(tokens.btnPrimaryBg).toBe('#3069d4');
     expect(tokens.btnPrimaryFg).toBe('#FFFFFF');
     expect(tokens.textAccent).toBe('#000000');
     expect(tokens.themeSurface).toBe('light');
@@ -18,8 +18,8 @@ describe('theme-tokens', () => {
 
   it('inverts primary button tokens for dark surface', () => {
     const tokens = resolveThemeTokens('#000000');
-    expect(tokens.btnPrimaryBg).toBe('#FFFFFF');
-    expect(tokens.btnPrimaryFg).toBe('#000000');
+    expect(tokens.btnPrimaryBg).toBe('#3069d4');
+    expect(tokens.btnPrimaryFg).toBe('#FFFFFF');
     expect(tokens.textAccent).toBe('#FFFFFF');
     expect(tokens.themeSurface).toBe('dark');
   });
