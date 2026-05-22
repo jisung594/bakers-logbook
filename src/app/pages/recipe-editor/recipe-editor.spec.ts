@@ -41,7 +41,7 @@ class MockAppFacadeService {
   logEvent = jest.fn();
 }
 
-describe('RecipeEditor', () => {
+describe('RecipeEditor - Initialization', () => {
   let component: RecipeEditor;
   let fixture: ComponentFixture<RecipeEditor>;
   
@@ -121,7 +121,7 @@ describe('RecipeEditor', () => {
     component.isPublic = existingRecipe.isPublic;
     component.archived = existingRecipe.archived;
     component.ngOnInit();
-    
+
     expect(component.recipeForm.get('title')?.value).toBe('Canelés');
     expect(component.recipeForm.get('yieldAmount')?.value).toBe(12);
     expect(component.recipeForm.get('yieldUnit')?.value).toBe('servings');
@@ -130,5 +130,56 @@ describe('RecipeEditor', () => {
     expect(component.recipeForm.get('instructions')?.value).toEqual(existingRecipe.instructions);
     expect(component.recipeForm.get('instructions')?.value).toHaveLength(2);
     expect(component.recipeForm.get('isPublic')?.value).toBe(false);
+  });
+});
+
+describe('RecipeEditor - Validation', () => {
+  let component: RecipeEditor;
+  let fixture: ComponentFixture<RecipeEditor>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RecipeEditor],
+      providers: [
+        FormBuilder,
+        { provide: Router, useValue: new MockRouter() },
+        { provide: RecipeFacadeService, useValue: new MockRecipeFacadeService() },
+        { provide: AuthFacadeService, useValue: new MockAuthFacadeService() },
+        { provide: AppFacadeService, useValue: new MockAppFacadeService() },
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(RecipeEditor);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should be invalid when title is empty', () => {
+    component.recipeForm.get('title')?.setValue('');
+    expect(component.recipeForm.valid).toBeFalsy();
+    expect(component.recipeForm.get('title')?.errors?.['required']).toBeTruthy();
+  });
+
+  it('should be invalid when yieldAmount is less than 1', () => {
+    component.recipeForm.get('yieldAmount')?.setValue(0);
+    expect(component.recipeForm.valid).toBeFalsy();
+    expect(component.recipeForm.get('yieldAmount')?.errors?.['min']).toBeTruthy();
+  });
+
+  it('should be valid when required fields are present', () => {
+    component.recipeForm.patchValue({
+      title: 'Valid Recipe',
+      yieldAmount: 1
+    });
+    expect(component.recipeForm.valid).toBeTruthy();
+  });
+
+  it('should not call facade.saveRecipe if the form is invalid', async () => {
+    const recipeFacade = TestBed.inject(RecipeFacadeService);
+    component.recipeForm.get('title')?.setValue(''); // Make form invalid
+    
+    await component.saveRecipe();
+    
+    expect(recipeFacade.saveRecipe).not.toHaveBeenCalled();
   });
 });
