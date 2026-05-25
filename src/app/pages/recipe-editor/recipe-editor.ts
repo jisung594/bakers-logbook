@@ -203,6 +203,11 @@ export class RecipeEditor implements OnInit, OnDestroy {
   }
 
   async saveRecipe() {
+    if (this.recipeForm.invalid) {
+      this.recipeForm.markAllAsTouched();
+      return;
+    }
+
     const formValue = this.recipeForm.value;
 
     const recipeData: Partial<Recipe> = {
