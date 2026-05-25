@@ -173,13 +173,92 @@ describe('RecipeEditor - Validation', () => {
     });
     expect(component.recipeForm.valid).toBeTruthy();
   });
+});
 
-  it('should not call facade.saveRecipe if the form is invalid', async () => {
+describe('RecipeEditor - Saving', () => {
+  let component: RecipeEditor;
+  let fixture: ComponentFixture<RecipeEditor>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RecipeEditor],
+      providers: [
+        FormBuilder,
+        { provide: Router, useValue: new MockRouter() },
+        { provide: RecipeFacadeService, useValue: new MockRecipeFacadeService() },
+        { provide: AuthFacadeService, useValue: new MockAuthFacadeService() },
+        { provide: AppFacadeService, useValue: new MockAppFacadeService() },
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(RecipeEditor);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should not save when form is invalid', () => {
     const recipeFacade = TestBed.inject(RecipeFacadeService);
-    component.recipeForm.get('title')?.setValue(''); // Make form invalid
+    component.recipeForm.patchValue({ title: '' });
+    
+    component.saveRecipe();
+    
+    expect(recipeFacade.saveRecipe).not.toHaveBeenCalled();
+  });
+
+  it('should call saveRecipe with correct form data', async () => {
+    const recipeFacade = TestBed.inject(RecipeFacadeService);
+
+    const mockSaveRecipe = jest.fn().mockResolvedValue('mock-id');
+    recipeFacade.saveRecipe = mockSaveRecipe;
+    
+    component.recipeForm.patchValue({
+      title: 'Newly Saved Recipe',
+      yieldAmount: 3,
+      yieldUnit: 'loaves',
+      ingredients: [],
+      instructions: []
+    });
     
     await component.saveRecipe();
     
-    expect(recipeFacade.saveRecipe).not.toHaveBeenCalled();
+    expect(recipeFacade.saveRecipe).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Newly Saved Recipe',
+        yield: { amount: 3, unit: 'loaves' }
+      })
+    );
+  });
+
+  it('should navigate to recipe detail page after successful save', async () => {
+    const recipeFacade = TestBed.inject(RecipeFacadeService);
+    const router = TestBed.inject(Router);
+
+    const mockSaveRecipe = jest.fn().mockResolvedValue('mock-id');
+    recipeFacade.saveRecipe = mockSaveRecipe;
+    
+    component.recipeForm.patchValue({
+      title: 'Newly Saved Recipe',
+      yieldAmount: 3,
+      yieldUnit: 'loaves',
+      ingredients: [],
+      instructions: []
+    });
+    
+    await component.saveRecipe();
+  
+    expect(router.navigate).toHaveBeenCalledWith(['/recipes', 'mock-id']);
+  });
+
+  it('should not navigate when save fails', async () => {
+    const recipeFacade = TestBed.inject(RecipeFacadeService);
+    const router = TestBed.inject(Router);
+
+    recipeFacade.saveRecipe = jest.fn().mockRejectedValue(
+      new Error('Save failed')
+    );
+    
+    await component.saveRecipe();
+    
+    expect(router.navigate).not.toHaveBeenCalled();
   });
 });
