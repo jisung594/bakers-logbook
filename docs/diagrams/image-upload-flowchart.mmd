@@ -1,0 +1,19 @@
+flowchart TB
+    %% 1. Request Phase
+    FE[Frontend] -- "`send image metadata`" --> BE["Backend (Cloud Function)"]
+    BE -- "`SDK generates signed URL, returns to frontend`" --> FE
+
+    %% 2. Execution Phase
+    FS@{ shape: cyl, label: "Firebase Storage" } -- "`upload detected, triggers backend`" --> BE
+    FE -- "`upload image file directly`" --> FS
+    BE -- "`upload complete, return success`" --> FE
+    BE -- "`onUpload: process & store metadata`" --> CF@{ shape: cyl, label: "Cloud Firestore" }
+
+    classDef nodeStyle fill:#efffff,stroke:#006666,stroke-width:1px,color:#006666;
+    classDef databaseStyle fill:#fff6ec,stroke:#006666,stroke-width:1px,color:#006666;
+    FE:::nodeStyle
+    BE:::nodeStyle
+    CF:::databaseStyle
+    FS:::databaseStyle
+
+    linkStyle default stroke:#00b4b4,stroke-width:2px,font-size:12px;
