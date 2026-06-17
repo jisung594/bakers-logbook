@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pinch-recipes",
+  "compatibility_date": "2026-06-16",
+  "observability": {
+    "enabled": true // enable Cloudflare logs/observability in dashboard
+  }, 
+  "assets": {
+    "directory": "./dist/pinch-recipes/browser",
+    "not_found_handling": "single-page-application" // SPA fallback: serve index.html for unknown asset paths (prevents 404s on client routes)
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "routes": [
+    { "pattern": "pinchthis.com/*", "zone_name": "pinchthis.com" },
+    { "pattern": "www.pinchthis.com/*", "zone_name": "pinchthis.com" }
+  ]
+}
